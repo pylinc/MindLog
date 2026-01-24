@@ -165,100 +165,100 @@ This guide provides a comprehensive checklist for implementing the backend using
 - [ ] Add static method `findByUser(userId)`
 
 ### Journal Prompt Model (models/JournalPrompt.js)
-- [ ] Create JournalPrompt schema with fields:
+- [✅] Create JournalPrompt schema with fields:
   - `prompt` (String, required, unique)
   - `category` (String, enum: reflection/gratitude/goals/creativity/mindfulness/relationships/personal_growth, required)
   - `isActive` (Boolean, default: true)
   - `createdAt` (Date, auto)
   - `updatedAt` (Date, auto)
-- [ ] Add index on `category`
-- [ ] Add index on `isActive`
-- [ ] Add static method `getRandomPrompt()`
-- [ ] Add static method `getByCategory(category)`
+- [✅] Add index on `category`
+- [✅] Add index on `isActive`
+- [✅] Add static method `getRandomPrompt()`
+- [✅] Add static method `getByCategory(category)`
 
 ---
 
 ## 3. Authentication APIs
 
 ### Sign Up API (POST /api/auth/register)
-- [ ] Validate input (username, email, password)
+- [✅] Validate input (username, email, password)
   - Username: 3-30 chars, alphanumeric with underscore/hyphen
   - Email: valid email format
   - Password: minimum 6 characters
-- [ ] Check if email already exists
-- [ ] Check if username already exists
-- [ ] Hash password using bcrypt (10 rounds)
-- [ ] Create new user in database
-- [ ] Generate JWT token (7 days expiration)
-- [ ] Return user data (without password) and token
-- [ ] Handle errors:
+- [✅] Check if email already exists
+- [✅] Check if username already exists
+- [✅] Hash password using bcrypt (10 rounds)
+- [✅] Create new user in database
+- [✅] Generate JWT token (7 days expiration)
+- [✅] Return user data (without password) and token
+- [✅] Handle errors:
   - 400: Validation errors
   - 409: User already exists
   - 500: Server error
 
 ### Login API (POST /api/auth/login)
-- [ ] Validate email and password input
-- [ ] Find user by email (include password in query)
-- [ ] Compare password with hashed password
-- [ ] Check if user is active
-- [ ] Generate JWT token
-- [ ] Return user data (without password) and token
-- [ ] Handle errors:
+- [✅] Validate email and password input
+- [✅] Find user by email (include password in query)
+- [✅] Compare password with hashed password
+- [✅] Check if user is active
+- [✅] Generate JWT token
+- [✅] Return user data (without password) and token
+- [✅] Handle errors:
   - 400: Missing email or password
   - 401: Invalid credentials
   - 500: Server error
 
 ### Get Current User (GET /api/auth/me)
-- [ ] Protect route with authentication middleware
-- [ ] Get user ID from JWT token
-- [ ] Find user in database (exclude password)
-- [ ] Return user data with preferences and profile
-- [ ] Handle errors:
+- [✅] Protect route with authentication middleware
+- [✅] Get user ID from JWT token
+- [✅] Find user in database (exclude password)
+- [✅] Return user data with preferences and profile
+- [✅] Handle errors:
   - 401: Unauthorized (invalid/missing token)
   - 404: User not found
   - 500: Server error
 
 ### Update Profile (PUT /api/auth/profile)
-- [ ] Protect route with authentication middleware
-- [ ] Validate input (firstName, lastName, bio, avatar)
-- [ ] Get user ID from JWT token
-- [ ] Update user profile fields
-- [ ] Update `updatedAt` timestamp
-- [ ] Return updated user data
-- [ ] Handle errors:
+- [✅] Protect route with authentication middleware
+- [✅] Validate input (firstName, lastName, bio, avatar)
+- [✅] Get user ID from JWT token
+- [✅] Update user profile fields
+- [✅] Update `updatedAt` timestamp
+- [✅] Return updated user data
+- [✅] Handle errors:
   - 400: Validation errors
   - 401: Unauthorized
   - 500: Server error
 
 ### Update Preferences (PUT /api/auth/preferences)
-- [ ] Protect route with authentication middleware
-- [ ] Validate input (theme, timezone, reminderTime)
-- [ ] Get user ID from JWT token
-- [ ] Update user preferences
-- [ ] Return updated preferences
-- [ ] Handle errors:
+- [✅] Protect route with authentication middleware
+- [✅] Validate input (theme, timezone, reminderTime)
+- [✅] Get user ID from JWT token
+- [✅] Update user preferences
+- [✅] Return updated preferences
+- [✅] Handle errors:
   - 400: Validation errors
   - 401: Unauthorized
   - 500: Server error
 
 ### Change Password (PUT /api/auth/password)
-- [ ] Protect route with authentication middleware
-- [ ] Validate input (currentPassword, newPassword)
-- [ ] Get user ID from JWT token
-- [ ] Find user with password field
-- [ ] Verify current password
-- [ ] Hash new password
-- [ ] Update user password
-- [ ] Return success message
-- [ ] Handle errors:
+- [✅] Protect route with authentication middleware
+- [✅] Validate input (currentPassword, newPassword)
+- [✅] Get user ID from JWT token
+- [✅] Find user with password field
+- [✅] Verify current password
+- [✅] Hash new password
+- [✅] Update user password
+- [✅] Return success message
+- [✅] Handle errors:
   - 400: Validation errors
   - 401: Current password incorrect
   - 500: Server error
 
 ### Logout API (POST /api/auth/logout)
-- [ ] Client-side token removal (frontend handles this)
+- [✅] Client-side token removal (frontend handles this)
 - [ ] Optional: Implement token blacklist
-- [ ] Return success message
+- [✅] Return success message
 
 ---
 

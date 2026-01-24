@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-const{THEMES,VALIDATION,DEFAULTS,REGEX,ERROR_MESSAGE} = require('./Config/constant');
+const jwt = require('jsonwebtoken');
+const{THEMES,VALIDATION,DEFAULTS,REGEX,JWT} = require('../Config/constant');
+
+require('dotenv').config();
 
 const userSchema = new mongoose.Schema({
     username:{
@@ -9,23 +12,23 @@ const userSchema = new mongoose.Schema({
         unique:true,
         trim:true,
         minlength:[VALIDATION.USERNAME.MIN_LENGTH,`Username must be atleast ${VALIDATION.USERNAME.MIN_LENGTH} characters`],
-        maxlength:[VALIDATION.USERNAME.MAX_LENTH,`Username cannot exceed ${VALIDATION.USERNAME.MAX_LENTH} characters`],
+        maxlength:[VALIDATION.USERNAME.MAX_LENGTH,`Username cannot exceed ${VALIDATION.USERNAME.MAX_LENGTH} characters`],
         match:[REGEX.USERNAME,'Username can only contain Letter,numbers,underscores and hyphes'],
-        lowercase:true
+        lowercase: true
     },
     email:{
         type:String,
         required:[true,'Email is required'],
         unique:true,
         trim:true,
-        lowercase,
+        lowercase: true,
         match:[REGEX.EMAIL,'please provide a valid email address']
     },
     password:{
         type:String,
         required:[true,'Password is required'],
-        minlength:[VALIDATION.MIN_LENGTH,`Password should contain minimum ${VALIDATION.MIN_LENGTH} character`],
-        maxlength:[VALIDATION.MIN_LENGTH,`Password cannot exceed ${VALIDATION.MIN_LENGTH} characters`],
+        minlength:[VALIDATION.PASSWORD.MIN_LENGTH,`Password should contain minimum ${VALIDATION.PASSWORD.MIN_LENGTH} character`],
+        maxlength:[VALIDATION.PASSWORD.MAX_LENGTH,`Password cannot exceed ${VALIDATION.PASSWORD.MAX_LENGTH} characters`],
         select:false, // do not include password in quaries by default
     },
     profile:{
@@ -46,7 +49,7 @@ const userSchema = new mongoose.Schema({
         },
         avatar:{
             type:String,
-            required:true,
+            // required:true,
         }
     },
     preferences:{
@@ -59,7 +62,7 @@ const userSchema = new mongoose.Schema({
         },
         timezone:{
             type:String,
-            default:DEFAULT.TIMEZONE
+            default:DEFAULTS.TIMEZONE
         },
         reminderTime: {
             type: String,
@@ -74,17 +77,13 @@ const userSchema = new mongoose.Schema({
     timestamps:true
 });
 
-userSchema.index({ email: 1 });
-userSchema.index({ username: 1 });
 
-
-userSchema.pre("save",async function(){
+userSchema.pre("save",async function(next){
     if(!this.isModified("password")){
         return next();
     }
     try{
         this.password = await bcrypt.hash(this.password,10);
-        next();
     }catch(err){
         next(err);
     }
@@ -105,8 +104,15 @@ userSchema.methods.toJSON = function() {
   return user;
 };
 
-userSchema.statics.findByEmail = function(){
-    return  this.findOne({email:this.email.toLowerCase()}).select('+password');
+userSchema.methods.generateToken = function(){
+    return jwt.sign(
+        {id:this._id},
+        process.env.JWT_SECRET,
+        {expiresIn:JWT.EXPIRES_IN || "7d"}
+    );
+}
+userSchema.statics.findByEmail = function(email){
+    return  this.findOne({email:email.toLowerCase()}).select('+password');
 }
 
 userSchema.virtual('fullName').get(function() {
