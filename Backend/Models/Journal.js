@@ -6,7 +6,7 @@ const {
   VALIDATION,
   REGEX,
   FILE_UPLOAD 
-} = require('../config/constants');
+} = require('../Config/constant');
 
 const journalSchema = new mongoose.Schema({
   userId: {

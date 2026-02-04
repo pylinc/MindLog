@@ -73,6 +73,13 @@ const VALIDATION = {
     }
 };
 
+// File upload configurations
+const FILE_UPLOAD = {
+    ALLOWED_TYPES: ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'application/pdf', 'text/plain'],
+    MAX_SIZE: 5 * 1024 * 1024  // 5MB in bytes
+};
+
+
 // HTTP Status Codes
 const HTTP_STATUS = {
     OK: 200,
@@ -156,5 +163,6 @@ module.exports = {
     PROMPT_CATEGORIES_VALUES,
     THEMES,
     MOODS,
-    PROMPT_CATEGORIES
+    PROMPT_CATEGORIES,
+    FILE_UPLOAD
 };

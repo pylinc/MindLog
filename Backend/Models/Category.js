@@ -4,7 +4,8 @@ const {
   VALIDATION, 
   DEFAULTS,
   REGEX 
-} = require('../config/constants');
+} = require('../Config/constant');
+
 
 const categorySchema = new mongoose.Schema({
   userId: {
@@ -17,8 +18,8 @@ const categorySchema = new mongoose.Schema({
     type: String,
     required: [true, 'Category name is required'],
     trim: true,
-    minlength: [VALIDATION.CATEGORY_NAME.MIN_LENGTH, `Category name must be at least ${VALIDATION.CATEGORY_NAME.MIN_LENGTH} character`],
-    maxlength: [VALIDATION.CATEGORY_NAME.MAX_LENGTH, `Category name cannot exceed ${VALIDATION.CATEGORY_NAME.MAX_LENGTH} characters`]
+    minlength: [VALIDATION.CATEGORY_NAMES.MIN_LENGTH, `Category name must be at least ${VALIDATION.CATEGORY_NAMES.MIN_LENGTH} character`],
+    maxlength: [VALIDATION.CATEGORY_NAMES.MAX_LENGTH, `Category name cannot exceed ${VALIDATION.CATEGORY_NAMES.MAX_LENGTH} characters`]
   },
   color: {
     type: String,

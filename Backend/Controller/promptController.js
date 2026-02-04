@@ -1,4 +1,6 @@
 const JournalPrompt = require("../Models/JournalPrompts");
+const { HTTP_STATUS, ERROR_MESSAGES } = require('../Config/constant');
+
 
 exports.getAllPrompts = async(req,res)=>{
     try{
