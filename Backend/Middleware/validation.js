@@ -25,6 +25,19 @@ const handleValidationErrors = (req, res, next) => {
  * Registration Validation
  */
 exports.validateRegistration = [
+    body('firstName')
+        .trim()
+        .notEmpty()
+        .withMessage('First name is required')
+        .isLength({ min: 1, max: 50 })
+        .withMessage('First name must be between 1 and 50 characters'),
+    
+    body('lastName')
+        .optional()
+        .trim()
+        .isLength({ max: 50 })
+        .withMessage('Last name must not exceed 50 characters'),
+    
     body('username')
         .trim()
         .isLength({ min: 3, max: 30 })
@@ -58,28 +71,14 @@ exports.validateRegistration = [
  * Login Validation
  */
 exports.validateLogin = [
-    body('email')
-        .optional()
+    body('identifier')
         .trim()
-        .toLowerCase()
-        .isEmail()
-        .withMessage('Please provide a valid email address'),
-    
-    body('username')
-        .optional()
-        .trim(),
+        .notEmpty()
+        .withMessage('Email or username is required'),
     
     body('password')
         .notEmpty()
         .withMessage('Password is required'),
-    
-    // Custom validation to ensure either email or username is provided
-    body().custom((value, { req }) => {
-        if (!req.body.email && !req.body.username) {
-            throw new Error('Either email or username is required');
-        }
-        return true;
-    }),
     
     handleValidationErrors
 ];

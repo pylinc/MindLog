@@ -21,14 +21,14 @@ const {
 } = require('../Middleware/validation');
 
 // Public routes with validation
-router.post('/signup', validateRegistration, signUp);
-router.post('/login', validateLogin, login);
+router.post('/auth/register', validateRegistration, signUp);
+router.post('/auth/login', validateLogin, login);
 
 // Protected routes with authentication and validation
-router.get('/me', authMiddleware, currentUser);
-router.put('/update', authMiddleware, validateProfileUpdate, updateUser);
-router.put('/updatePreferences', authMiddleware, validatePreferencesUpdate, updatePrefrences);
-router.put('/changePassword', authMiddleware, validatePasswordChange, changePassword);
-router.post('/logout', authMiddleware, logout);
+router.get('/auth/me', authMiddleware, currentUser);
+router.put('/auth/update', authMiddleware, validateProfileUpdate, updateUser);
+router.put('/auth/updatePreferences', authMiddleware, validatePreferencesUpdate, updatePrefrences);
+router.put('/auth/changePassword', authMiddleware, validatePasswordChange, changePassword);
+router.post('/auth/logout', authMiddleware, logout);
 
 module.exports = router;

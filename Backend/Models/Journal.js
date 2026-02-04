@@ -90,8 +90,11 @@ const journalSchema = new mongoose.Schema({
     },
     coordinates: {
       type: [Number], // [longitude, latitude]
+      required: false,
       validate: {
         validator: function(coords) {
+          // Allow empty array or valid coordinates
+          if (!coords || coords.length === 0) return true;
           return coords.length === 2 && 
                  coords[0] >= -180 && coords[0] <= 180 && // longitude
                  coords[1] >= -90 && coords[1] <= 90;     // latitude
@@ -131,12 +134,11 @@ journalSchema.index({ userId: 1, isFavorite: 1 });
 journalSchema.index({ title: 'text', content: 'text' });
 
 // Pre-save middleware to clean tags
-journalSchema.pre('save', function(next) {
+journalSchema.pre('save', async function() {
   // Remove duplicate tags and empty strings
   if (this.tags && this.tags.length > 0) {
     this.tags = [...new Set(this.tags.filter(tag => tag && tag.trim()))];
   }
-  next();
 });
 
 // Instance method to check if journal belongs to user

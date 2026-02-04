@@ -80,7 +80,7 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use(cookieParser());
 
 // Data Sanitization against NoSQL Injection
-app.use(mongoSanitize());
+// app.use(mongoSanitize()); // Temporarily disabled for Express 5 compatibility
 
 // Data Sanitization against XSS
 // app.use(xss()); // Temporarily disabled due to package issues

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - MindLog</title>
+    <link href="./css/output.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-dark text-light font-sans antialiased">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 bg-dark/80 backdrop-blur-lg border-b border-light/10 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center gap-8">
+                    <a href="dashboard.html" class="text-2xl font-display font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-secondary">
+                        MindLog
+                    </a>
+                    <div class="hidden md:flex gap-6">
+                        <a href="dashboard.html" class="text-light/80 hover:text-light transition-colors">Dashboard</a>
+                        <a href="categories.html" class="text-light/80 hover:text-light transition-colors">Categories</a>
+                        <a href="profile.html" class="text-light hover:text-white transition-colors">Profile</a>
+                    </div>
+                </div>
+                <div class="flex items-center gap-4">
+                    <button id="logoutBtn" class="px-4 py-2 text-sm font-medium text-light/80 hover:text-light transition-colors">
+                        Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="pt-24 pb-12 px-4 max-w-4xl mx-auto">
+        <div class="mb-8">
+            <h1 class="text-4xl font-bold text-white mb-2">Profile Settings</h1>
+            <p class="text-light/60">Manage your account and preferences</p>
+        </div>
+
+        <!-- Profile Card -->
+        <div class="bg-light/5 backdrop-blur-xl border border-light/10 rounded-2xl p-8 mb-6">
+            <h2 class="text-2xl font-bold text-white mb-6">Account Information</h2>
+            
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-2">Username</label>
+                    <div class="px-4 py-3 bg-dark/50 border border-light/10 rounded-xl text-white">
+                        <span id="profileUsername">Loading...</span>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-2">Email</label>
+                    <div class="px-4 py-3 bg-dark/50 border border-light/10 rounded-xl text-white">
+                        <span id="profileEmail">Loading...</span>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-2">First Name</label>
+                    <div class="px-4 py-3 bg-dark/50 border border-light/10 rounded-xl text-white">
+                        <span id="profileFirstName">Loading...</span>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-2">Last Name</label>
+                    <div class="px-4 py-3 bg-dark/50 border border-light/10 rounded-xl text-white">
+                        <span id="profileLastName">Loading...</span>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-2">Member Since</label>
+                    <div class="px-4 py-3 bg-dark/50 border border-light/10 rounded-xl text-white">
+                        <span id="profileCreatedAt">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Preferences Card -->
+        <div class="bg-light/5 backdrop-blur-xl border border-light/10 rounded-2xl p-8">
+            <h2 class="text-2xl font-bold text-white mb-6">Preferences</h2>
+            
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-2">Theme</label>
+                    <div class="px-4 py-3 bg-dark/50 border border-light/10 rounded-xl text-white">
+                        <span id="profileTheme">Dark</span>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-2">Timezone</label>
+                    <div class="px-4 py-3 bg-dark/50 border border-light/10 rounded-xl text-white">
+                        <span id="profileTimezone">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="./js/api.js"></script>
+    <script src="./js/main.js"></script>
+    <script>
+        lucide.createIcons();
+
+        // Check auth
+        if (!api.isAuthenticated()) {
+            window.location.href = 'login.html';
+        }
+
+        const logoutBtn = document.getElementById('logoutBtn');
+
+        // Load user profile
+        async function loadProfile() {
+            try {
+                const response = await api.request('/auth/me', 'GET');
+                
+                if (response.success) {
+                    document.getElementById('profileUsername').textContent = response.username || 'N/A';
+                    document.getElementById('profileEmail').textContent = response.email || 'N/A';
+                    document.getElementById('profileFirstName').textContent = response.profile?.firstName || 'N/A';
+                    document.getElementById('profileLastName').textContent = response.profile?.lastName || 'N/A';
+                    
+                    const createdDate = new Date(response.createdAt).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                    });
+                    document.getElementById('profileCreatedAt').textContent = createdDate;
+                    
+                    document.getElementById('profileTheme').textContent = response.preferences?.theme || 'Dark';
+                    document.getElementById('profileTimezone').textContent = response.preferences?.timeZone || 'UTC';
+                }
+            } catch (error) {
+                console.error('Failed to load profile:', error);
+            }
+        }
+
+        // Event listeners
+        logoutBtn.addEventListener('click', () => api.logout());
+
+        // Initialize
+        loadProfile();
+    </script>
+</body>
+</html>

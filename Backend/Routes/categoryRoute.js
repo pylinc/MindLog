@@ -16,11 +16,12 @@ const {
 } = require('../Middleware/validation');
 
 // All category routes require authentication
-router.get('/getall', authMiddleware, getAll);
+router.get('/', authMiddleware, getAll);
 router.get('/:id', authMiddleware, validateObjectId, getSingle);
-router.post('/create', authMiddleware, validateCategory, createCategory);
-router.put('/update/:id', authMiddleware, validateObjectId, validateCategory, updateCategory);
-router.delete('/delete/:id', authMiddleware, validateObjectId, deleteCategory);
+router.post('/', authMiddleware, validateCategory, createCategory);
+router.put('/:id', authMiddleware, validateObjectId, validateCategory, updateCategory);
+router.delete('/:id', authMiddleware, validateObjectId, deleteCategory);
 
 module.exports = router;
+
 

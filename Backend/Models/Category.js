@@ -44,7 +44,7 @@ const categorySchema = new mongoose.Schema({
 categorySchema.index({ userId: 1, name: 1 }, { unique: true });
 
 // Pre-save middleware to ensure category name is unique per user
-categorySchema.pre('save', async function(next) {
+categorySchema.pre('save', async function() {
   if (this.isNew || this.isModified('name')) {
     const existingCategory = await this.constructor.findOne({
       userId: this.userId,
@@ -55,10 +55,9 @@ categorySchema.pre('save', async function(next) {
     if (existingCategory) {
       const error = new Error('Category with this name already exists');
       error.statusCode = 409; // Conflict
-      return next(error);
+      throw error;
     }
   }
-  next();
 });
 
 // Instance method to check if category belongs to user

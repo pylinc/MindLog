@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - MindLog</title>
+    <link href="./css/output.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-dark text-light font-sans antialiased selection:bg-secondary selection:text-white">
+
+    <!-- Background Elements -->
+    <div class="fixed inset-0 z-[-1]">
+        <div class="absolute top-1/4 -right-20 w-96 h-96 bg-secondary/20 rounded-full blur-[100px] animate-pulse"></div>
+        <div class="absolute bottom-0 left-0 w-96 h-96 bg-primary/10 rounded-full blur-[100px] animate-pulse"></div>
+    </div>
+
+    <div class="min-h-screen flex items-center justify-center p-4">
+        <!-- Signup Card -->
+        <div class="w-full max-w-md bg-light/5 backdrop-blur-xl border border-light/10 rounded-2xl p-8 shadow-2xl relative animate-fade-in-up">
+            
+            <div class="text-center mb-8">
+                <a href="index.html" class="inline-block text-2xl font-display font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-secondary mb-2">
+                    MindLog
+                </a>
+                <h2 class="text-2xl font-bold text-white">Create Account</h2>
+                <p class="text-gray-400 text-sm mt-2">Start your journey of self-reflection today.</p>
+            </div>
+
+            <form id="signupForm" class="space-y-5">
+                <!-- First Name -->
+                <div>
+                    <label for="firstName" class="block text-sm font-medium text-gray-300 mb-2">First Name</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+                            <i data-lucide="user" class="w-5 h-5"></i>
+                        </div>
+                        <input type="text" id="firstName" required 
+                            class="block w-full pl-10 pr-3 py-3 bg-dark/50 border border-light/10 rounded-xl focus:ring-2 focus:ring-secondary focus:border-secondary placeholder-gray-500 text-white transition-all outline-none" placeholder="John">
+                    </div>
+                </div>
+
+                <!-- Last Name -->
+                <div>
+                    <label for="lastName" class="block text-sm font-medium text-gray-300 mb-2">Last Name (Optional)</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+                            <i data-lucide="user" class="w-5 h-5"></i>
+                        </div>
+                        <input type="text" id="lastName" 
+                            class="block w-full pl-10 pr-3 py-3 bg-dark/50 border border-light/10 rounded-xl focus:ring-2 focus:ring-secondary focus:border-secondary placeholder-gray-500 text-white transition-all outline-none" placeholder="Doe">
+                    </div>
+                </div>
+
+                <!-- Username -->
+                <div>
+                    <label for="username" class="block text-sm font-medium text-gray-300 mb-2">Username</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+                            <i data-lucide="at-sign" class="w-5 h-5"></i>
+                        </div>
+                        <input type="text" id="username" required 
+                            class="block w-full pl-10 pr-3 py-3 bg-dark/50 border border-light/10 rounded-xl focus:ring-2 focus:ring-secondary focus:border-secondary placeholder-gray-500 text-white transition-all outline-none" placeholder="johndoe">
+                    </div>
+                </div>
+
+                <!-- Email -->
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-300 mb-2">Email Address</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+                            <i data-lucide="mail" class="w-5 h-5"></i>
+                        </div>
+                        <input type="email" id="email" required 
+                            class="block w-full pl-10 pr-3 py-3 bg-dark/50 border border-light/10 rounded-xl focus:ring-2 focus:ring-secondary focus:border-secondary placeholder-gray-500 text-white transition-all outline-none" placeholder="you@example.com">
+                    </div>
+                </div>
+
+                <!-- Password -->
+                <div>
+                    <label for="password" class="block text-sm font-medium text-gray-300 mb-2">Password</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+                            <i data-lucide="lock" class="w-5 h-5"></i>
+                        </div>
+                        <input type="password" id="password" required 
+                            class="block w-full pl-10 pr-3 py-3 bg-dark/50 border border-light/10 rounded-xl focus:ring-2 focus:ring-secondary focus:border-secondary placeholder-gray-500 text-white transition-all outline-none" placeholder="Create a strong password">
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" id="submitBtn"
+                    class="w-full flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-lg text-sm font-bold text-white bg-gradient-to-r from-secondary to-primary hover:shadow-secondary/50 transition-all transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-secondary focus:ring-offset-dark">
+                    Join MindLog
+                </button>
+            </form>
+
+            <div class="mt-6 text-center">
+                <p class="text-sm text-gray-400">
+                    Already have an account? 
+                    <a href="login.html" class="font-medium text-secondary hover:text-pink-400 transition-colors">Sign in</a>
+                </p>
+            </div>
+            
+             <!-- Error Message Container -->
+            <div id="errorMessage" class="hidden mt-4 p-3 bg-red-500/10 border border-red-500/20 rounded-lg text-red-400 text-sm text-center"></div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="./js/api.js"></script>
+    <script src="./js/main.js"></script>
+    <script>
+        lucide.createIcons();
+        
+        const signupForm = document.getElementById('signupForm');
+        const submitBtn = signupForm.querySelector('button[type="submit"]');
+        const originalBtnText = submitBtn.textContent;
+
+        signupForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            ui.hideError('errorMessage');
+            ui.setLoading('submitBtn', true, originalBtnText);
+
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value || '';
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                const response = await api.register(firstName, lastName, username, email, password);
+                
+                if (response.success) {
+                    // Auto-login or redirect to login
+                    // For now, redirect to login
+                    window.location.href = 'login.html';
+                } else {
+                    ui.showError('errorMessage', response.message);
+                }
+            } catch (error) {
+                console.error(error);
+                ui.showError('errorMessage', error.message || 'Failed to connect to server');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalBtnText;
+                submitBtn.classList.remove('opacity-70', 'cursor-not-allowed');
+            }
+        });
+    </script>
+</body>
+</html>

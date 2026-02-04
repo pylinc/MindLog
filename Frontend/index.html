@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindLog - Your Personal Growth Journal</title>
+    <link href="./css/output.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-dark text-light font-sans antialiased overflow-x-hidden selection:bg-secondary selection:text-white">
+
+    <!-- Gradient Background -->
+    <div class="fixed inset-0 z-[-1]">
+        <div class="absolute top-0 left-1/4 w-96 h-96 bg-primary/30 rounded-full blur-[128px] animate-pulse"></div>
+        <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-secondary/20 rounded-full blur-[128px] animate-pulse" style="animation-duration: 4s;"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 transition-all duration-300 backdrop-blur-md border-b border-light/10" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex items-center">
+                    <a href="#" class="text-2xl font-display font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-secondary">
+                        MindLog
+                    </a>
+                </div>
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#features" class="text-gray-300 hover:text-white transition-colors">Features</a>
+                    <a href="#about" class="text-gray-300 hover:text-white transition-colors">About</a>
+                    <a href="login.html" class="px-5 py-2 rounded-full border border-light/20 hover:bg-light/10 transition-all">Login</a>
+                    <a href="signup.html" class="px-5 py-2 rounded-full bg-gradient-to-r from-primary to-secondary text-white font-medium hover:shadow-lg hover:shadow-primary/50 transition-all transform hover:-translate-y-0.5">Get Started</a>
+                </div>
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button class="text-gray-300 hover:text-white mobile-menu-button">
+                        <i data-lucide="menu"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div class="md:hidden hidden mobile-menu bg-dark/95 backdrop-blur-xl border-b border-light/10">
+            <a href="#features" class="block py-4 px-6 text-sm hover:bg-light/5">Features</a>
+            <a href="#about" class="block py-4 px-6 text-sm hover:bg-light/5">About</a>
+            <a href="login.html" class="block py-4 px-6 text-sm hover:bg-light/5 text-primary">Login</a>
+            <a href="signup.html" class="block py-4 px-6 text-sm hover:bg-light/5 text-secondary font-bold">Sign Up</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="min-h-screen pt-40 pb-20 relative overflow-hidden">
+        <div class="text-center px-4 max-w-5xl mx-auto">
+            <div class="animate-fade-in-up">
+                <span class="inline-flex items-center gap-2 px-4 py-1.5 mb-6 rounded-full bg-light/5 border border-light/10 text-sm font-medium text-blue-300 backdrop-blur-sm">
+                    ✨ Reimagine your journaling experience
+                </span>
+                <h1 class="text-5xl md:text-7xl font-display font-bold leading-tight mb-6">
+                    Capture Your Thoughts, <br />
+                    <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-primary to-secondary">
+                        Unlock Your Potential
+                    </span>
+                </h1>
+                <p class="text-xl text-gray-400 mb-10 max-w-2xl mx-auto leading-relaxed">
+                    A secure, intelligent, and beautiful space to reflect on your day, track your moods, and grow as a person.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                    <a href="signup.html" class="px-8 py-4 rounded-full bg-white text-dark font-bold text-lg hover:bg-gray-100 transition-all shadow-xl hover:shadow-white/20 transform hover:-translate-y-1 w-full sm:w-auto">
+                        Start Journaling Free
+                    </a>
+                    <a href="#demo" class="px-8 py-4 rounded-full border border-light/20 hover:bg-light/10 transition-all text-lg font-medium w-full sm:w-auto backdrop-blur-sm flex items-center justify-center gap-2 group">
+                        <i data-lucide="play-circle" class="w-5 h-5 group-hover:text-primary transition-colors"></i>
+                        Watch Demo
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Floating Elements Mockup -->
+            <div class="mt-20 relative animate-on-scroll delay-200">
+                <div class="absolute inset-0 bg-gradient-to-t from-dark to-transparent z-10 h-full bottom-0"></div>
+                <!-- Placeholder for App Dashboard Image/Mockup -->
+                <div class="bg-light/5 border border-light/10 rounded-t-2xl p-2 md:p-4 max-w-4xl mx-auto backdrop-blur-md shadow-2xl">
+                    <div class="aspect-video bg-dark rounded-lg flex items-center justify-center overflow-hidden relative group">
+                        <div class="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20 opacity-50 group-hover:opacity-70 transition-opacity"></div>
+                        <p class="text-light/50 font-display text-lg">Dashboard Preview</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-32 relative bg-dark/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-20 animate-on-scroll">
+                <h2 class="text-3xl md:text-5xl font-display font-bold mb-6">Designed for clarity</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto text-lg">Everything you need to maintain a healthy journaling habit, wrapped in a beautiful interface.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="p-8 rounded-2xl bg-light/5 border border-light/10 hover:border-primary/50 transition-all hover:bg-light/10 group animate-on-scroll">
+                    <div class="w-14 h-14 rounded-xl bg-primary/20 flex items-center justify-center mb-6 text-primary group-hover:scale-110 transition-transform">
+                        <i data-lucide="book-open" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 font-display">Daily Entries</h3>
+                    <p class="text-gray-400 leading-relaxed">Write freely with a distraction-free editor. Support for rich text, moods, and categorization.</p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="p-8 rounded-2xl bg-light/5 border border-light/10 hover:border-secondary/50 transition-all hover:bg-light/10 group animate-on-scroll animation-delay-200">
+                    <div class="w-14 h-14 rounded-xl bg-secondary/20 flex items-center justify-center mb-6 text-secondary group-hover:scale-110 transition-transform">
+                        <i data-lucide="sparkles" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 font-display">Smart Prompts</h3>
+                    <p class="text-gray-400 leading-relaxed">Stuck? Get personalized writing prompts to help you reflect deeply and express yourself.</p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="p-8 rounded-2xl bg-light/5 border border-light/10 hover:border-blue-500/50 transition-all hover:bg-light/10 group animate-on-scroll animation-delay-400">
+                    <div class="w-14 h-14 rounded-xl bg-blue-500/20 flex items-center justify-center mb-6 text-blue-400 group-hover:scale-110 transition-transform">
+                        <i data-lucide="bar-chart-2" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 font-display">Mood Tracking</h3>
+                    <p class="text-gray-400 leading-relaxed">Visualize your emotional journey over time with beautiful, interactive analytics charts.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 border-t border-light/10 bg-dark relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="text-2xl font-display font-bold text-white">MindLog</div>
+            <p class="text-gray-500 text-sm">© 2026 MindLog. All rights reserved. Built with ❤️.</p>
+            <div class="flex space-x-6">
+                <a href="#" class="text-gray-400 hover:text-white transition-colors"><i data-lucide="twitter" class="w-5 h-5"></i></a>
+                <a href="#" class="text-gray-400 hover:text-white transition-colors"><i data-lucide="github" class="w-5 h-5"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="./js/main.js"></script>
+    <script>
+        // Icon initialization
+        lucide.createIcons();
+
+        // Mobile menu toggle
+        const btn = document.querySelector('button.mobile-menu-button');
+        const menu = document.querySelector('.mobile-menu');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+    </script>
+</body>
+</html>
