@@ -1,5 +1,8 @@
 // API Configuration
-const API_URL = 'http://localhost:3000/api';
+// Automatically use production backend when deployed, localhost when developing
+const API_URL = window.location.hostname === 'localhost' 
+    ? 'http://localhost:3000/api'
+    : 'https://mindlog-backend.onrender.com/api'; // Update this with your actual Render backend URL
 
 const api = {
     // Generic request handler
