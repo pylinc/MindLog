@@ -138,10 +138,17 @@
                 </a>
             </div>
         </form>
+
+        <!-- Draft Status Indicator -->
+        <div id="draftStatus" class="fixed bottom-6 right-6 px-4 py-2 bg-dark/90 border border-light/20 rounded-lg text-sm text-light/60 backdrop-blur-lg hidden transition-all">
+            <i data-lucide="save" class="w-4 h-4 inline-block mr-2"></i>
+            <span id="draftStatusText">Draft saved</span>
+        </div>
     </main>
 
     <!-- Scripts -->
     <script src="./js/api.js"></script>
+    <script src="./js/draft-manager.js"></script>
     <script src="./js/main.js"></script>
     <script>
         lucide.createIcons();
@@ -169,30 +176,136 @@
             }
         });
 
-        // Handle form submission
+        // Draft auto-save functionality
+        const DRAFT_TYPE = 'new-entry';
+        let autoSaveTimeout = null;
+        const AUTO_SAVE_DELAY = 2000; // 2 seconds
+
+        // Elements
+        const titleInput = document.getElementById('title');
+        const moodSelect = document.getElementById('mood');
+        const isFavoriteCheckbox = document.getElementById('isFavorite');
+        const draftStatusEl = document.getElementById('draftStatus');
+        const draftStatusText = document.getElementById('draftStatusText');
         const entryForm = document.getElementById('entryForm');
+        const submitBtn = document.getElementById('submitEntry');
+
+        /**
+         * Get current form data
+         */
+        function getFormData() {
+            return {
+                title: titleInput.value,
+                content: quill.root.innerHTML,
+                mood: moodSelect.value,
+                isFavorite: isFavoriteCheckbox.checked
+            };
+        }
+
+        /**
+         * Set form data
+         */
+        function setFormData(data) {
+            if (data.title) titleInput.value = data.title;
+            if (data.content) quill.root.innerHTML = data.content;
+            if (data.mood) moodSelect.value = data.mood;
+            if (data.isFavorite !== undefined) isFavoriteCheckbox.checked = data.isFavorite;
+        }
+
+        /**
+         * Show draft status message
+         */
+        function showDraftStatus(message, duration = 3000) {
+            draftStatusText.textContent = message;
+            draftStatusEl.classList.remove('hidden');
+            
+            setTimeout(() => {
+                draftStatusEl.classList.add('hidden');
+            }, duration);
+        }
+
+        /**
+         * Save draft with debouncing
+         */
+        function scheduleDraftSave() {
+            // Clear existing timeout
+            if (autoSaveTimeout) {
+                clearTimeout(autoSaveTimeout);
+            }
+
+            // Schedule new save
+            autoSaveTimeout = setTimeout(() => {
+                const formData = getFormData();
+                
+                // Only save if there's content
+                if (formData.title || formData.content !== '<p><br></p>') {
+                    const success = DraftManager.saveDraft(DRAFT_TYPE, formData);
+                    if (success) {
+                        const draft = DraftManager.getDraft(DRAFT_TYPE);
+                        const timeAgo = DraftManager.getTimeAgo(draft.timestamp);
+                        showDraftStatus(`Draft saved ${timeAgo}`);
+                    }
+                }
+            }, AUTO_SAVE_DELAY);
+        }
+
+        /**
+         * Check for existing draft and offer recovery
+         */
+        function checkForDraft() {
+            const draft = DraftManager.getDraft(DRAFT_TYPE);
+            
+            if (draft && draft.data) {
+                const timeAgo = DraftManager.getTimeAgo(draft.timestamp);
+                const message = `You have an unsaved draft from ${timeAgo}. Would you like to recover it?`;
+                
+                if (confirm(message)) {
+                    setFormData(draft.data);
+                    showDraftStatus('Draft recovered successfully');
+                } else {
+                    DraftManager.clearDraft(DRAFT_TYPE);
+                }
+            }
+        }
+
+        // Check for draft on page load
+        checkForDraft();
+
+        // Add auto-save listeners
+        titleInput.addEventListener('input', scheduleDraftSave);
+        moodSelect.addEventListener('change', scheduleDraftSave);
+        isFavoriteCheckbox.addEventListener('change', scheduleDraftSave);
+        quill.on('text-change', scheduleDraftSave);
+
+        // Save draft before page unload
+        window.addEventListener('beforeunload', (e) => {
+            const formData = getFormData();
+            if (formData.title || formData.content !== '<p><br></p>') {
+                DraftManager.saveDraft(DRAFT_TYPE, formData);
+            }
+        });
+
+        // Handle form submission
         entryForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             
-            const submitBtn = document.getElementById('submitEntry');
             const originalText = submitBtn.textContent;
             submitBtn.disabled = true;
             submitBtn.textContent = 'Saving...';
             
-            const title = document.getElementById('title').value;
-            const content = quill.root.innerHTML; // Get HTML content from Quill
-            const mood = document.getElementById('mood').value;
-            const isFavorite = document.getElementById('isFavorite').checked;
+            const formData = getFormData();
             
             try {
                 const response = await api.request('/journal/create', 'POST', {
-                    title,
-                    content,
-                    mood: mood || undefined,
-                    isFavorite
+                    title: formData.title,
+                    content: formData.content,
+                    mood: formData.mood || undefined,
+                    isFavorite: formData.isFavorite
                 });
                 
                 if (response.success) {
+                    // Clear draft after successful submission
+                    DraftManager.clearDraft(DRAFT_TYPE);
                     // Redirect to dashboard
                     window.location.href = 'dashboard.html';
                 }
@@ -203,6 +316,9 @@
                 submitBtn.textContent = originalText;
             }
         });
+
+        // Reinitialize lucide icons for draft status
+        setTimeout(() => lucide.createIcons(), 100);
     </script>
 </body>
 </html>
