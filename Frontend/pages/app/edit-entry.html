@@ -4,109 +4,167 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Entry - MindLog</title>
-    <link href="./css/output.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+    <link href="../../assets/css/output.css" rel="stylesheet">
+    <link href="../../assets/css/dashboard-theme.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <!-- Quill Rich Text Editor -->
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
     <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
     <style>
-        /* Dark theme for Quill editor */
+        /* Quill Editor Theming */
         .ql-toolbar.ql-snow {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--surface);
+            border: 2px solid var(--border-subtle);
             border-radius: 12px 12px 0 0;
+            border-bottom: none;
         }
+        
         .ql-toolbar .ql-stroke {
-            stroke: #9ca3af;
+            stroke: var(--text-secondary);
         }
+        
         .ql-toolbar .ql-fill {
-            fill: #9ca3af;
+            fill: var(--text-secondary);
         }
+        
         .ql-toolbar .ql-picker-label {
-            color: #9ca3af;
+            color: var(--text-secondary);
         }
+        
         .ql-toolbar button:hover .ql-stroke,
         .ql-toolbar button.ql-active .ql-stroke {
-            stroke: #60a5fa;
+            stroke: var(--accent-primary);
         }
+        
         .ql-toolbar button:hover .ql-fill,
         .ql-toolbar button.ql-active .ql-fill {
-            fill: #60a5fa;
+            fill: var(--accent-primary);
         }
+        
         .ql-container.ql-snow {
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--surface);
+            border: 2px solid var(--border-subtle);
             border-radius: 0 0 12px 12px;
-            color: #fff;
+            color: var(--text-primary);
         }
+        
         .ql-editor {
-            color: #fff;
+            color: var(--text-primary);
             min-height: 400px;
+            font-size: 1rem;
+            line-height: 1.6;
         }
+        
         .ql-editor.ql-blank::before {
-            color: #6b7280;
+            color: var(--text-tertiary);
+            font-style: normal;
+        }
+        
+        /* Light mode specific fixes */
+        [data-theme="light"] .ql-editor {
+            background: var(--surface);
+        }
+        
+        [data-theme="light"] .ql-toolbar.ql-snow {
+            background: var(--surface);
+        }
+        
+        /* Responsive Quill Editor */
+        @media (max-width: 768px) {
+            .ql-editor {
+                min-height: 300px;
+                font-size: 0.95rem;
+            }
+            
+            .ql-toolbar.ql-snow {
+                padding: 0.5rem;
+            }
+            
+            .ql-toolbar button {
+                width: 28px;
+                height: 28px;
+            }
+            
+            .ql-toolbar .ql-picker {
+                font-size: 0.85rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .ql-editor {
+                min-height: 250px;
+                font-size: 0.9rem;
+            }
+            
+            .ql-toolbar button {
+                width: 24px;
+                height: 24px;
+            }
         }
     </style>
 </head>
 <body class="bg-dark text-light font-sans antialiased">
 
     <!-- Navigation -->
-    <nav class="fixed top-0 left-0 right-0 bg-dark/80 backdrop-blur-lg border-b border-light/10 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <div class="flex items-center gap-8">
-                    <a href="dashboard.html" class="text-2xl font-display font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-secondary">
-                        MindLog
-                    </a>
-                </div>
-                <div class="flex items-center gap-4">
-                    <a href="dashboard.html" class="px-4 py-2 text-sm font-medium text-light/80 hover:text-light transition-colors flex items-center gap-2">
-                        <i data-lucide="arrow-left" class="w-4 h-4"></i>
-                        Back to Dashboard
-                    </a>
-                </div>
+    <nav class="navbar">
+        <div class="navbar-content">
+            <a href="dashboard.html" class="logo">MindLog</a>
+            <div class="nav-links">
+                <a href="dashboard.html" class="nav-link">Dashboard</a>
+                <a href="categories.html" class="nav-link">Categories</a>
+                <a href="profile.html" class="nav-link">Profile</a>
+            </div>
+            <div class="user-section">
+                <span class="user-name" id="navDisplayName">@user</span>
+                <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+                    <span id="themeIcon">☀️</span>
+                </button>
+                <button class="logout-btn" id="logoutBtn">Logout</button>
             </div>
         </div>
     </nav>
 
     <!-- Main Content -->
-    <main class="pt-24 pb-12 px-4 max-w-4xl mx-auto">
-        <div class="mb-8">
-            <h1 class="text-4xl font-bold text-white mb-2">Edit Entry</h1>
-            <p class="text-light/60">Update your thoughts and feelings</p>
+    <div class="container">
+        <div class="page-header">
+            <h1 class="greeting">Edit Entry</h1>
+            <p class="subtitle">Update your thoughts and feelings</p>
         </div>
 
         <!-- Loading State -->
         <div id="loadingState" class="text-center py-16">
-            <p class="text-light/60">Loading entry...</p>
+            <p class="subtitle">Loading entry...</p>
         </div>
 
+        <!-- Back to Dashboard Link -->
+        <a href="dashboard.html" class="back-to-dashboard" id="backButton" style="display: none;">
+            <i data-lucide="arrow-left"></i>
+            Back to Dashboard
+        </a>
+
         <!-- Entry Form -->
-        <form id="entryForm" class="space-y-6 hidden">
+        <form id="entryForm" class="entry-form" style="display: none;">
             <!-- Title -->
-            <div>
-                <label for="title" class="block text-sm font-medium text-gray-300 mb-2">Title</label>
+            <div class="form-group">
+                <label for="title" class="form-label">Title</label>
                 <input type="text" id="title" required 
-                    class="block w-full px-4 py-3 bg-dark/50 border border-light/10 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary placeholder-gray-500 text-white transition-all outline-none" 
+                    class="form-input" 
                     placeholder="Give your entry a meaningful title...">
             </div>
 
             <!-- Rich Text Editor -->
-            <div>
-                <label class="block text-sm font-medium text-gray-300 mb-2">Content</label>
-                <div class="bg-dark/50 border border-light/10 rounded-xl overflow-hidden">
-                    <div id="editor"></div>
-                </div>
+            <div class="form-group">
+                <label class="form-label">Content</label>
+                <div id="editor"></div>
             </div>
 
-            <!-- Mood and Tags Row -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Mood and Favorite Row -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
                 <!-- Mood -->
-                <div>
-                    <label for="mood" class="block text-sm font-medium text-gray-300 mb-2">Mood (Optional)</label>
-                    <select id="mood" 
-                        class="block w-full px-4 py-3 bg-dark/50 border border-light/10 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary text-white transition-all outline-none">
+                <div class="form-group">
+                    <label for="mood" class="form-label">Mood (Optional)</label>
+                    <select id="mood" class="form-select">
                         <option value="">Select a mood...</option>
                         <option value="happy">😊 Happy</option>
                         <option value="sad">😢 Sad</option>
@@ -121,24 +179,31 @@
                     </select>
                 </div>
 
+                <!-- Category -->
+                <div class="form-group">
+                    <label for="category" class="form-label">Category (Optional)</label>
+                    <select id="category" class="form-select">
+                        <option value="">Select a category...</option>
+                        <!-- Categories will be loaded dynamically -->
+                    </select>
+                </div>
+
                 <!-- Favorite Toggle -->
-                <div>
-                    <label class="block text-sm font-medium text-gray-300 mb-2">Mark as Favorite</label>
-                    <label class="flex items-center gap-3 px-4 py-3 bg-dark/50 border border-light/10 rounded-xl cursor-pointer hover:border-primary/30 transition-all">
-                        <input type="checkbox" id="isFavorite" class="w-5 h-5 rounded border-light/20 bg-dark/50 text-primary focus:ring-2 focus:ring-primary">
-                        <span class="text-white text-sm">Add to favorites</span>
+                <div class="form-group">
+                    <label class="form-label">Mark as Favorite</label>
+                    <label class="form-checkbox-wrapper">
+                        <input type="checkbox" id="isFavorite" class="form-checkbox">
+                        <span class="form-checkbox-label">Add to favorites</span>
                     </label>
                 </div>
             </div>
 
             <!-- Action Buttons -->
-            <div class="flex gap-4">
-                <button type="submit" id="submitEntry"
-                    class="flex-1 py-3 px-6 bg-gradient-to-r from-primary to-secondary text-white font-bold rounded-xl shadow-lg hover:shadow-primary/50 transition-all transform hover:-translate-y-0.5">
+            <div class="form-actions">
+                <button type="submit" id="submitEntry" class="btn-primary-gradient">
                     Update Entry
                 </button>
-                <a href="dashboard.html"
-                    class="px-6 py-3 bg-light/5 border border-light/10 text-light hover:bg-light/10 font-medium rounded-xl transition-all">
+                <a href="dashboard.html" class="btn-secondary">
                     Cancel
                 </a>
             </div>
@@ -149,18 +214,82 @@
             <i data-lucide="save" class="w-4 h-4 inline-block mr-2"></i>
             <span id="draftStatusText">Draft saved</span>
         </div>
-    </main>
+    </div>
 
     <!-- Scripts -->
-    <script src="./js/api.js"></script>
-    <script src="./js/draft-manager.js"></script>
-    <script src="./js/main.js"></script>
+    <script src="../../assets/js/api.js"></script>
+    <script src="../../assets/js/draft-manager.js"></script>
+    <script src="../../assets/js/main.js"></script>
     <script>
         lucide.createIcons();
 
+        // Theme toggle functionality
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        const themeIcon = document.getElementById('themeIcon');
+        if (savedTheme === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            if (themeIcon) themeIcon.textContent = '🌙';
+        }
+        
+        document.getElementById('themeToggle').addEventListener('click', function() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            if (themeIcon) themeIcon.textContent = newTheme === 'dark' ? '🌙' : '☀️';
+        });
+
+        // Load user info for navbar
+        async function loadUserInfo() {
+            try {
+                const response = await api.request('/auth/me', 'GET');
+                if (response.success && response.data) {
+                    const displayName = document.getElementById('navDisplayName');
+                    if (displayName) {
+                        displayName.textContent = `@${response.data.username}`;
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading user info:', error);
+            }
+        }
+
+        // Load categories for dropdown
+        async function loadCategories() {
+            try {
+                const response = await api.request('/category', 'GET');
+                if (response.success && response.data) {
+                    const categorySelect = document.getElementById('category');
+                    const categories = Array.isArray(response.data) ? response.data : [];
+                    
+                    categories.forEach(category => {
+                        const option = document.createElement('option');
+                        option.value = category._id;
+                        option.textContent = `${category.icon || '📁'} ${category.name}`;
+                        categorySelect.appendChild(option);
+                    });
+                }
+            } catch (error) {
+                // Silently handle if user has no categories yet (404 is expected)
+                if (error.message && !error.message.includes('not found')) {
+                    console.error('Error loading categories:', error);
+                }
+            }
+        }
+
+        // Logout functionality
+        document.getElementById('logoutBtn')?.addEventListener('click', () => {
+            api.logout();
+            window.location.href = '../auth/login.html';
+        });
+
+        // Initialize user info and categories
+        loadUserInfo();
+        loadCategories();
+
         // Check auth
         if (!api.isAuthenticated()) {
-            window.location.href = 'login.html';
+            window.location.href = '../auth/login.html';
         }
 
         // Get entry ID from URL
@@ -183,7 +312,7 @@
         let isLoadingFromServer = true; // Flag to prevent draft recovery during initial load
 
         // Elements
-        let titleInput, moodSelect, isFavoriteCheckbox, submitBtn;
+        let titleInput, moodSelect, categorySelect, isFavoriteCheckbox, submitBtn;
         const draftStatusEl = document.getElementById('draftStatus');
         const draftStatusText = document.getElementById('draftStatusText');
 
@@ -195,6 +324,7 @@
                 title: titleInput.value,
                 content: quill.root.innerHTML,
                 mood: moodSelect.value,
+                categoryId: categorySelect.value,
                 isFavorite: isFavoriteCheckbox.checked
             };
         }
@@ -206,6 +336,7 @@
             if (data.title) titleInput.value = data.title;
             if (data.content) quill.root.innerHTML = data.content;
             if (data.mood) moodSelect.value = data.mood;
+            if (data.categoryId) categorySelect.value = data.categoryId;
             if (data.isFavorite !== undefined) isFavoriteCheckbox.checked = data.isFavorite;
         }
 
@@ -274,12 +405,14 @@
         function setupAutoSave() {
             titleInput = document.getElementById('title');
             moodSelect = document.getElementById('mood');
+            categorySelect = document.getElementById('category');
             isFavoriteCheckbox = document.getElementById('isFavorite');
             submitBtn = document.getElementById('submitEntry');
 
             // Add auto-save listeners
             titleInput.addEventListener('input', scheduleDraftSave);
             moodSelect.addEventListener('change', scheduleDraftSave);
+            categorySelect.addEventListener('change', scheduleDraftSave);
             isFavoriteCheckbox.addEventListener('change', scheduleDraftSave);
             quill.on('text-change', scheduleDraftSave);
 
@@ -311,6 +444,7 @@
                     // Populate form
                     document.getElementById('title').value = entry.title;
                     document.getElementById('mood').value = entry.mood || '';
+                    document.getElementById('category').value = entry.categoryId?._id || entry.categoryId || '';
                     document.getElementById('isFavorite').checked = entry.isFavorite || false;
                     
                     // Initialize Quill editor with content
@@ -334,9 +468,11 @@
                     // Set content
                     quill.root.innerHTML = entry.content;
                     
-                    // Show form, hide loading
+                    // Show form, hide loading, show back button
                     loadingState.classList.add('hidden');
-                    entryForm.classList.remove('hidden');
+                    loadingState.style.display = 'none';
+                    entryForm.style.display = 'flex';
+                    document.getElementById('backButton').style.display = 'inline-flex';
 
                     // Setup auto-save after form is loaded
                     setupAutoSave();
@@ -364,6 +500,7 @@
                     title: formData.title,
                     content: formData.content,
                     mood: formData.mood || undefined,
+                    categoryId: formData.categoryId || undefined,
                     isFavorite: formData.isFavorite
                 });
                 

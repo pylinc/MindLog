@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - MindLog</title>
+    <link href="../../assets/css/output.css" rel="stylesheet">
+    <link href="../../assets/css/dashboard-theme.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .stat-card {
+            background: var(--surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            line-height: 1.2;
+        }
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="navbar-content">
+            <a href="dashboard.html" class="logo">MindLog Admin</a>
+            <div class="nav-links">
+                <a href="dashboard.html" class="nav-link active">Overview</a>
+                <a href="prompts.html" class="nav-link">Manage Prompts</a>
+                <a href="../app/dashboard.html" class="nav-link">Main App</a>
+            </div>
+            <div class="user-section">
+                <span class="user-name" id="navDisplayName">Admin</span>
+                <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+                    <span id="themeIcon">☀️</span>
+                </button>
+                <button class="logout-btn" id="logoutBtn">Logout</button>
+                <button class="hamburger-btn" id="hamburgerBtn" aria-label="Menu">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="dashboard.html" class="mobile-nav-link active">
+            <i data-lucide="layout-dashboard"></i> Overview
+        </a>
+        <a href="prompts.html" class="mobile-nav-link">
+            <i data-lucide="edit-3"></i> Manage Prompts
+        </a>
+        <a href="../app/dashboard.html" class="mobile-nav-link">
+            <i data-lucide="home"></i> Main App
+        </a>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Header -->
+        <div class="page-header">
+            <h1 class="greeting">System Overview</h1>
+            <p class="subtitle">Platform statistics and health</p>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8" id="statsContainer">
+            <!-- Loading State -->
+            <div class="col-span-full text-center py-12">
+                <p class="text-text-secondary">Loading statistics...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../../assets/js/api.js"></script>
+    <!-- Admin JS will be created next -->
+    <script src="../../assets/js/admin.js"></script> 
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

@@ -31,6 +31,16 @@ const api = {
             const data = await response.json();
 
             if (!response.ok) {
+                // Auto-redirect on Auth failures
+                if (response.status === 401 || response.status === 403) {
+                    localStorage.removeItem('token');
+                    localStorage.removeItem('user');
+                    // Prevent redirect loop if already on login
+                    if (!window.location.pathname.includes('login.html')) {
+                        window.location.href = '../auth/login.html';
+                    }
+                }
+
                 // If there are validation errors, format them nicely
                 if (data.errors && Array.isArray(data.errors)) {
                     const errorMessages = data.errors.map(err => err.message).join(', ');
@@ -65,6 +75,16 @@ const api = {
     // Helper to check if user is logged in
     isAuthenticated() {
         return !!localStorage.getItem('token');
+    },
+
+    // Journal methods
+    async getRandomPrompt(excludeId) {
+        const url = excludeId ? `/prompt/random?exclude=${excludeId}` : '/prompt/random';
+        return this.request(url, 'GET');
+    },
+
+    async getMoodStats() {
+        return this.request('/journal/stats/mood', 'GET');
     }
 };
 

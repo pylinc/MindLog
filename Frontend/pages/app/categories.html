@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categories - MindLog</title>
+    <link href="../../assets/css/output.css" rel="stylesheet">
+    <link href="../../assets/css/dashboard-theme.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* Failsafe for button visibility */
+        @media (max-width: 768px) {
+            #addCategoryBtnDesktop {
+                display: none !important;
+            }
+        }
+        @media (min-width: 769px) {
+            #addCategoryBtnMobile {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="navbar-content">
+            <a href="dashboard.html" class="logo">MindLog</a>
+            <div class="nav-links">
+                <a href="dashboard.html" class="nav-link">Dashboard</a>
+                <a href="categories.html" class="nav-link active">Categories</a>
+                <a href="profile.html" class="nav-link">Profile</a>
+            </div>
+            <div class="user-section">
+                <span class="user-name" id="navDisplayName">@user</span>
+                <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+                    <span id="themeIcon">☀️</span>
+                </button>
+                <button class="logout-btn" id="logoutBtn">Logout</button>
+                <button class="hamburger-btn" id="hamburgerBtn" aria-label="Menu">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="dashboard.html" class="mobile-nav-link">
+            <i data-lucide="layout-dashboard"></i> Dashboard
+        </a>
+        <a href="categories.html" class="mobile-nav-link active">
+            <i data-lucide="folder-open"></i> Categories
+        </a>
+        <a href="profile.html" class="mobile-nav-link">
+            <i data-lucide="user"></i> Profile
+        </a>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Header -->
+        <div class="page-header" style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem;">
+            <div>
+                <h1 class="greeting">Categories</h1>
+                <p class="subtitle">Organize your journal entries with custom categories</p>
+            </div>
+            
+            <!-- Desktop Add Button (top right) -->
+            <button id="addCategoryBtnDesktop" class="hidden md:flex new-entry-btn" style="margin-top: 0.5rem; width: auto; padding: 0.75rem 1.5rem;">
+                <span class="plus-icon">+</span>
+                <span>Add New Category</span>
+            </button>
+        </div>
+
+        <!-- Inline Category Form (Hidden by default) -->
+        <div id="categoryFormCard" class="hidden" style="margin-bottom: 2rem;">
+            <div class="card" style="padding: 2rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                    <h3 id="formTitle" style="font-size: 1.25rem; font-weight: 600; color: var(--text-primary);">Create New Category</h3>
+                    <button id="closeFormBtn" class="action-btn" title="Close">✕</button>
+                </div>
+
+                <form id="categoryForm">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <!-- Category Name -->
+                        <div class="col-span-1 md:col-span-2">
+                            <label class="form-label">Category Name *</label>
+                            <input type="text" id="categoryName" required maxlength="50" 
+                                class="form-input" placeholder="e.g., Work, Personal, Travel">
+                        </div>
+
+                        <!-- Color Picker -->
+                        <div>
+                            <label class="form-label">Color</label>
+                            <div style="display: flex; gap: 0.75rem; align-items: center;">
+                                <input type="color" id="categoryColor" value="#6366f1"
+                                    style="width: 60px; height: 44px; border: 2px solid var(--border-subtle); border-radius: 8px; cursor: pointer; background: var(--surface);">
+                                <span id="colorPreview" style="flex: 1; padding: 0.75rem; border: 2px solid var(--border-subtle); border-radius: 8px; background: #6366f1; color: white; text-align: center; font-weight: 500; font-size: 0.875rem;">#6366f1</span>
+                            </div>
+                        </div>
+
+                        <!-- Icon Picker -->
+                        <div>
+                            <label class="form-label">Icon (Emoji)</label>
+                            <input type="text" id="categoryIcon" placeholder="📁" maxlength="2"
+                                class="form-input" style="text-align: center; font-size: 1.5rem;">
+                        </div>
+
+                        <!-- Description -->
+                        <div class="col-span-1 md:col-span-2">
+                            <label class="form-label">Description (Optional)</label>
+                            <textarea id="categoryDescription" rows="2" maxlength="200"
+                                class="form-input" placeholder="Brief description of this category..." style="resize: none;"></textarea>
+                        </div>
+                    </div>
+
+                    <div id="formError" class="hidden" style="padding: 0.75rem; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2); border-radius: 8px; color: #ef4444; font-size: 0.875rem; margin-bottom: 1rem;"></div>
+
+                    <div class="flex flex-col-reverse sm:flex-row gap-4 justify-end mt-4">
+                        <button type="button" id="cancelFormBtn" class="btn-secondary w-full sm:w-auto">
+                            Cancel
+                        </button>
+                        <button type="submit" id="submitCategoryBtn" class="btn-primary-gradient w-full sm:w-auto">
+                            <span id="submitBtnText">Create Category</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Add Category Button Container -->
+        <div id="addCategoryBtnContainer">
+            <!-- Mobile FAB (Strictly hidden on desktop) -->
+            <button id="addCategoryBtnMobile" class="md:hidden" style="
+                position: fixed;
+                bottom: 2rem;
+                right: 2rem;
+                width: 56px;
+                height: 56px;
+                border-radius: 50%;
+                background: linear-gradient(135deg, var(--accent-purple) 0%, var(--accent-primary) 100%);
+                border: none;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 24px;
+                color: white;
+                z-index: 100;
+                transition: transform 0.2s, box-shadow 0.2s;
+            " onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 6px 16px rgba(0, 0, 0, 0.4)'" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 12px rgba(0, 0, 0, 0.3)'">
+                +
+            </button>
+        </div>
+
+        <!-- Categories Grid -->
+        <div id="categoriesContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+            <!-- Categories will be loaded here -->
+        </div>
+
+        <!-- Empty State -->
+        <div id="emptyState" class="hidden text-center py-16">
+            <i data-lucide="folder" class="w-16 h-16 mx-auto text-light/20 mb-4"></i>
+            <h3 class="text-xl font-semibold text-light/60 mb-2">No categories yet</h3>
+            <p class="text-light/40 mb-6">Categories help you organize your journal entries</p>
+            <button onclick="showCategoryForm()" class="empty-state-btn">
+                <span class="icon">+</span>
+                <span>Create First Category</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="hidden fixed inset-0 bg-black/60 modal flex items-center justify-center z-50 p-4">
+        <div class="bg-dark border border-light/10 rounded-2xl p-8 max-w-md w-full shadow-2xl">
+            <div class="text-center mb-6">
+                <div class="w-16 h-16 bg-red-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i data-lucide="trash-2" class="w-8 h-8 text-red-400"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-white mb-2">Delete Category</h2>
+                <p class="text-light/60">Are you sure you want to delete "<span id="deleteCategoryName" class="text-white font-semibold"></span>"?</p>
+                <p class="text-light/40 text-sm mt-2">This action cannot be undone.</p>
+            </div>
+
+            <div id="deleteError" class="hidden text-red-400 text-sm bg-red-400/10 border border-red-400/20 rounded-lg p-3 mb-4"></div>
+
+            <div class="flex gap-3">
+                <button type="button" id="cancelDeleteBtn" 
+                    class="flex-1 px-6 py-3 bg-light/5 border border-light/10 text-light rounded-xl hover:bg-light/10 transition-colors">
+                    Cancel
+                </button>
+                <button type="button" id="confirmDeleteBtn"
+                    class="flex-1 px-6 py-3 bg-red-500 text-white font-bold rounded-xl hover:bg-red-600 transition-colors">
+                    Delete
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../../assets/js/api.js"></script>
+    <script src="../../assets/js/nav.js"></script>
+    <script src="../../assets/js/categories.js"></script>
+    <script>
+        // Check auth
+        if (!api.isAuthenticated()) {
+            window.location.href = 'login.html';
+        }
+
+        // Theme toggle functionality - Initialize FIRST
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const html = document.documentElement;
+
+        // Load saved theme
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        html.setAttribute('data-theme', savedTheme);
+        themeIcon.textContent = savedTheme === 'dark' ? '🌙' : '☀️';
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            themeIcon.textContent = newTheme === 'dark' ? '🌙' : '☀️';
+        });
+
+        // DOM Elements
+        const categoriesContainer = document.getElementById('categoriesContainer');
+        const emptyState = document.getElementById('emptyState');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const addCategoryBtnDesktop = document.getElementById('addCategoryBtnDesktop');
+        const addCategoryBtnMobile = document.getElementById('addCategoryBtnMobile');
+        const addCategoryBtnContainer = document.getElementById('addCategoryBtnContainer');
+        const deleteModal = document.getElementById('deleteModal');
+        const categoryForm = document.getElementById('categoryForm');
+        const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
+        const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+        const deleteError = document.getElementById('deleteError');
+
+        let currentEditId = null;
+        let currentDeleteId = null;
+
+        // Load user info
+        async function loadUserInfo() {
+            try {
+                const navDisplayName = document.getElementById('navDisplayName');
+                if (!navDisplayName) return;
+
+                const response = await api.request('/auth/me', 'GET');
+                if (response.success) {
+                    navDisplayName.textContent = `@${response.username}`;
+                }
+            } catch (error) {
+                console.error('Failed to load user info:', error);
+            }
+        }
+
+        // Load categories
+        async function loadCategories() {
+            try {
+                console.log('Loading categories...');
+                const response = await api.request('/category', 'GET');
+                console.log('Categories API response:', response);
+                
+                // Fix: The API returns data array, not categories array
+                const categories = response.data || [];
+                console.log('Categories array:', categories, 'Length:', categories.length);
+                
+                if (categories.length > 0) {
+                    categoriesContainer.innerHTML = '';
+                    emptyState.classList.add('hidden');
+                    
+                    categories.forEach((category, index) => {
+                        const card = createCategoryCard(category, index);
+                        categoriesContainer.appendChild(card);
+                    });
+                    
+                    lucide.createIcons();
+                    console.log('Successfully loaded', categories.length, 'categories');
+                } else {
+                    categoriesContainer.innerHTML = '';
+                    emptyState.classList.remove('hidden');
+                    console.log('No categories found, showing empty state');
+                }
+            } catch (error) {
+                console.error('Failed to load categories:', error);
+                console.error('Error details:', error.message, error.stack);
+                if (error.message.includes('not found') || error.message.includes('404')) {
+                    categoriesContainer.innerHTML = '';
+                    emptyState.classList.remove('hidden');
+                    console.log('404 error - showing empty state');
+                } else {
+                    // Show error message to user for other errors
+                    categoriesContainer.innerHTML = `
+                        <div style="grid-column: 1 / -1; text-align: center; padding: 2rem;">
+                            <p style="color: var(--text-secondary);">Error loading categories: ${error.message}</p>
+                            <button onclick="loadCategories()" class="btn-primary-gradient" style="margin-top: 1rem; padding: 0.75rem 1.5rem; border-radius: 8px; border: none; cursor: pointer;">
+                                Retry
+                            </button>
+                        </div>
+                    `;
+                }
+            }
+        }
+
+        // Create category card
+        function createCategoryCard(category, index) {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.style.animationDelay = `${index * 0.05}s`;
+            card.style.cursor = 'default';
+            
+            card.innerHTML = `
+                <div class="flex items-start justify-between mb-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-xl flex items-center justify-center text-2xl transition-transform hover:scale-110" style="background-color: ${category.color || '#6366f1'}20">
+                            ${category.icon || '📁'}
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold" style="color: var(--text-primary)">${category.name}</h3>
+                            <p class="text-xs" style="color: var(--text-tertiary)">${category.createdAt ? new Date(category.createdAt).toLocaleDateString() : ''}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex gap-2">
+                        <button onclick="editCategory('${category._id}')" class="action-btn" title="Edit">
+                            <i data-lucide="edit-2" class="w-4 h-4"></i>
+                        </button>
+                        <button onclick="deleteCategory('${category._id}', '${category.name.replace(/'/g, "\\'")}')" class="action-btn" title="Delete" style="color: #ef4444;">
+                            <i data-lucide="trash-2" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <p class="text-sm mb-3" style="color: var(--text-secondary)">${category.description || 'No description'}</p>
+                
+                <div class="flex items-center gap-2 text-xs pt-3" style="color: var(--text-tertiary); border-top: 1px solid var(--border-subtle);">
+                    <i data-lucide="file-text" class="w-3 h-3"></i>
+                    <span>Used in journal entries</span>
+                </div>
+            `;
+            
+            return card;
+        }
+
+        // Function to show the category form
+        function showCategoryForm() {
+            currentEditId = null;
+            document.getElementById('formTitle').textContent = 'Create New Category';
+            document.getElementById('submitBtnText').textContent = 'Create Category';
+            categoryForm.reset();
+            document.getElementById('categoryColor').value = '#6366f1';
+            document.getElementById('colorPreview').style.background = '#6366f1';
+            document.getElementById('colorPreview').textContent = '#6366f1';
+            document.getElementById('formError').classList.add('hidden');
+            
+            // Show form, hide buttons
+            document.getElementById('categoryFormCard').classList.remove('hidden');
+            if (addCategoryBtnContainer) addCategoryBtnContainer.classList.add('hidden');
+            if (addCategoryBtnDesktop) addCategoryBtnDesktop.style.display = 'none';
+            
+            // Scroll to form
+            document.getElementById('categoryFormCard').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // Show inline form for adding category (Desktop button)
+        if (addCategoryBtnDesktop) {
+            addCategoryBtnDesktop.addEventListener('click', showCategoryForm);
+        }
+
+        // Show inline form for adding category (Mobile FAB)
+        if (addCategoryBtnMobile) {
+            addCategoryBtnMobile.addEventListener('click', showCategoryForm);
+        }
+
+        // Close form button
+        document.getElementById('closeFormBtn').addEventListener('click', () => {
+            document.getElementById('categoryFormCard').classList.add('hidden');
+            if (addCategoryBtnContainer) addCategoryBtnContainer.classList.remove('hidden');
+            if (addCategoryBtnDesktop) addCategoryBtnDesktop.style.display = '';
+            categoryForm.reset();
+        });
+
+        // Cancel form button
+        document.getElementById('cancelFormBtn').addEventListener('click', () => {
+            document.getElementById('categoryFormCard').classList.add('hidden');
+            if (addCategoryBtnContainer) addCategoryBtnContainer.classList.remove('hidden');
+            if (addCategoryBtnDesktop) addCategoryBtnDesktop.style.display = '';
+            categoryForm.reset();
+        });
+
+        // Color picker preview update
+        document.getElementById('categoryColor').addEventListener('input', (e) => {
+            const color = e.target.value;
+            document.getElementById('colorPreview').style.background = color;
+            document.getElementById('colorPreview').textContent = color;
+        });
+
+        // Edit category
+        window.editCategory = async (id) => {
+            try {
+                const response = await api.request(`/category/${id}`, 'GET');
+                const category = response.data;
+                
+                currentEditId = id;
+                document.getElementById('formTitle').textContent = 'Edit Category';
+                document.getElementById('submitBtnText').textContent = 'Update Category';
+                document.getElementById('categoryName').value = category.name;
+                document.getElementById('categoryDescription').value = category.description || '';
+                document.getElementById('categoryColor').value = category.color || '#6366f1';
+                document.getElementById('categoryIcon').value = category.icon || '';
+                document.getElementById('colorPreview').style.background = category.color || '#6366f1';
+                document.getElementById('colorPreview').textContent = category.color || '#6366f1';
+                document.getElementById('formError').classList.add('hidden');
+                
+                // Show form, hide button
+                document.getElementById('categoryFormCard').classList.remove('hidden');
+                document.getElementById('addCategoryBtnContainer').classList.add('hidden');
+                
+                // Scroll to form
+                document.getElementById('categoryFormCard').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } catch (error) {
+                console.error('Failed to load category:', error);
+                alert('Failed to load category details');
+            }
+        };
+
+        // Delete category
+        window.deleteCategory = (id, name) => {
+            currentDeleteId = id;
+            document.getElementById('deleteCategoryName').textContent = name;
+            deleteError.classList.add('hidden');
+            deleteModal.classList.remove('hidden');
+            lucide.createIcons();
+        };
+
+        // Handle form submission
+        categoryForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('categoryName').value.trim();
+            const description = document.getElementById('categoryDescription').value.trim();
+            const color = document.getElementById('categoryColor').value;
+            const icon = document.getElementById('categoryIcon').value.trim();
+
+            if (!name) {
+                const formError = document.getElementById('formError');
+                formError.textContent = 'Category name is required';
+                formError.classList.remove('hidden');
+                return;
+            }
+
+            try {
+                const submitBtn = document.getElementById('submitCategoryBtn');
+                const submitBtnText = document.getElementById('submitBtnText');
+                const originalText = submitBtnText.textContent;
+                submitBtn.disabled = true;
+                submitBtnText.textContent = 'Saving...';
+
+                const data = { name, description, color, icon };
+                
+                if (currentEditId) {
+                    await api.request(`/category/${currentEditId}`, 'PUT', data);
+                } else {
+                    await api.request('/category', 'POST', data);
+                }
+
+                // Hide form, show button
+                document.getElementById('categoryFormCard').classList.add('hidden');
+                if (addCategoryBtnContainer) addCategoryBtnContainer.classList.remove('hidden');
+                if (addCategoryBtnDesktop) addCategoryBtnDesktop.style.display = '';
+                categoryForm.reset();
+                await loadCategories();
+                
+                submitBtn.disabled = false;
+                submitBtnText.textContent = originalText;
+            } catch (error) {
+                console.error('Failed to save category:', error);
+                const formError = document.getElementById('formError');
+                formError.textContent = error.message || 'Failed to save category';
+                formError.classList.remove('hidden');
+                
+                const submitBtn = document.getElementById('submitCategoryBtn');
+                const submitBtnText = document.getElementById('submitBtnText');
+                submitBtn.disabled = false;
+                submitBtnText.textContent = currentEditId ? 'Update Category' : 'Create Category';
+            }
+        });
+
+        // Confirm delete
+        confirmDeleteBtn.addEventListener('click', async () => {
+            try {
+                confirmDeleteBtn.disabled = true;
+                confirmDeleteBtn.textContent = 'Deleting...';
+
+                await api.request(`/category/${currentDeleteId}`, 'DELETE');
+                
+                deleteModal.classList.add('hidden');
+                await loadCategories();
+            } catch (error) {
+                console.error('Failed to delete category:', error);
+                deleteError.textContent = error.message || 'Failed to delete category';
+                deleteError.classList.remove('hidden');
+            } finally {
+                confirmDeleteBtn.disabled = false;
+                confirmDeleteBtn.textContent = 'Delete';
+            }
+        });
+
+        // Cancel delete modal
+        cancelDeleteBtn.addEventListener('click', () => {
+            deleteModal.classList.add('hidden');
+        });
+
+        // Close delete modal on backdrop click
+        deleteModal.addEventListener('click', (e) => {
+            if (e.target === deleteModal) {
+                deleteModal.classList.add('hidden');
+            }
+        });
+
+        // Event listeners
+        logoutBtn.addEventListener('click', () => api.logout());
+
+        // Initialize
+        loadUserInfo();
+        loadCategories();
+    </script>
+</body>
+</html>

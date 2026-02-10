@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - MindLog</title>
+    <link href="../../assets/css/output.css" rel="stylesheet">
+    <link href="../../assets/css/dashboard-theme.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" id="themeToggle" title="Toggle theme" style="position: fixed; top: 1rem; right: 1rem; z-index: 100;">
+        <span id="themeIcon">☀️</span>
+    </button>
+
+    <div class="min-h-screen flex items-center justify-center p-4" style="background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);">
+        <!-- Login Card -->
+        <div class="w-full max-w-md" style="background: var(--surface); border-radius: 20px; padding: 2.5rem; border: 1px solid var(--border-subtle); box-shadow: var(--shadow-lg);">
+            
+            <div class="text-center mb-8">
+                <a href="../../index.html" class="logo" style="display: inline-block; margin-bottom: 1rem; font-size: 1.8rem;">
+                    MindLog
+                </a>
+                <h2 style="font-family: 'Fraunces', serif; font-size: 1.8rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Welcome Back</h2>
+                <p style="color: var(--text-secondary); font-size: 0.9rem;">Enter your credentials to access your journal.</p>
+            </div>
+
+            <form id="loginForm" class="space-y-6">
+                <!-- Email or Username -->
+                <div>
+                    <label for="identifier" style="display: block; font-size: 0.9rem; font-weight: 500; color: var(--text-secondary); margin-bottom: 0.5rem;">Email or Username</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none" style="color: var(--text-tertiary);">
+                            <i data-lucide="mail" class="w-5 h-5"></i>
+                        </div>
+                        <input type="text" id="identifier" required 
+                            style="display: block; width: 100%; padding: 0.75rem 0.75rem 0.75rem 2.5rem; background: var(--bg-gradient-start); border: 1px solid var(--border-subtle); border-radius: 12px; color: var(--text-primary); outline: none; transition: all 0.3s ease;" placeholder="you@example.com or username" onfocus="this.style.borderColor='var(--accent-primary)'" onblur="this.style.borderColor='var(--border-subtle)'">
+                    </div>
+                </div>
+
+                <!-- Password -->
+                <div>
+                    <div class="flex justify-between items-center mb-2">
+                        <label for="password" style="display: block; font-size: 0.9rem; font-weight: 500; color: var(--text-secondary);">Password</label>
+                        <a href="#" style="font-size: 0.75rem; color: var(--accent-primary); text-decoration: none;">Forgot password?</a>
+                    </div>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none" style="color: var(--text-tertiary);">
+                            <i data-lucide="lock" class="w-5 h-5"></i>
+                        </div>
+                        <input type="password" id="password" required 
+                            style="display: block; width: 100%; padding: 0.75rem 0.75rem 0.75rem 2.5rem; background: var(--bg-gradient-start); border: 1px solid var(--border-subtle); border-radius: 12px; color: var(--text-primary); outline: none; transition: all 0.3s ease;" placeholder="••••••••" onfocus="this.style.borderColor='var(--accent-primary)'" onblur="this.style.borderColor='var(--border-subtle)'">
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" id="submitBtn"
+                    style="width: 100%; padding: 0.875rem; background: linear-gradient(135deg, var(--accent-purple), var(--accent-primary)); border: none; border-radius: 12px; color: white; font-weight: 700; font-size: 1rem; cursor: pointer; transition: all 0.3s ease; box-shadow: var(--shadow-md);" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='var(--shadow-lg)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='var(--shadow-md)'">
+                    Sign In
+                </button>
+            </form>
+
+            <div class="mt-6 text-center">
+                <p style="font-size: 0.9rem; color: var(--text-secondary);">
+                    Don't have an account? 
+                    <a href="signup.html" style="color: var(--accent-primary); font-weight: 600; text-decoration: none;">Sign up for free</a>
+                </p>
+            </div>
+            
+            <!-- Error Message Container -->
+            <div id="errorMessage" class="hidden mt-4 p-3 bg-red-500/10 border border-red-500/20 rounded-lg text-red-400 text-sm text-center"></div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../../assets/js/api.js"></script>
+    <script src="./js/main.js"></script>
+    <script>
+        lucide.createIcons();
+        
+        // Theme toggle functionality
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        const themeIcon = document.getElementById('themeIcon');
+        if (savedTheme === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            if (themeIcon) themeIcon.textContent = '🌙';
+        }
+        
+        document.getElementById('themeToggle').addEventListener('click', function() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            if (themeIcon) themeIcon.textContent = newTheme === 'dark' ? '🌙' : '☀️';
+        });
+        
+        const loginForm = document.getElementById('loginForm');
+        const submitBtn = loginForm.querySelector('button[type="submit"]');
+        const originalBtnText = submitBtn.textContent;
+
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Clear previous errors
+            ui.hideError('errorMessage');
+            ui.setLoading('submitBtn', true, originalBtnText); // Note: ID needs to be added to button
+
+            const identifier = document.getElementById('identifier').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                const response = await api.login(identifier, password);
+                
+                if (response.success) {
+                    // Store auth data
+                    localStorage.setItem('token', response.token);
+                    localStorage.setItem('user', JSON.stringify(response.User));
+                    
+                    // Redirect based on role
+                    if (response.User.role === 'admin') {
+                        window.location.href = '../admin/dashboard.html';
+                    } else {
+                        window.location.href = '../app/dashboard.html';
+                    } 
+                } else {
+                    ui.showError('errorMessage', response.message);
+                }
+            } catch (error) {
+                console.error(error);
+                ui.showError('errorMessage', error.message || 'Failed to connect to server');
+            } finally {
+                // Manually reset button state since we don't have an ID on it yet in this snippet context, 
+                // but checking the loop, I should add the ID to the button first or select it safely.
+                // Let's rely on the ui helper if I add the ID to the HTML below.
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalBtnText;
+                submitBtn.classList.remove('opacity-70', 'cursor-not-allowed');
+            }
+        });
+    </script>
+</body>
+</html>

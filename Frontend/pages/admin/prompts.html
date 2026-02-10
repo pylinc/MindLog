@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Prompts - MindLog Admin</title>
+    <link href="../../assets/css/output.css" rel="stylesheet">
+    <link href="../../assets/css/dashboard-theme.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.open {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: var(--surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            width: 100%;
+            max-width: 500px;
+            padding: 2rem;
+            box-shadow: var(--shadow-lg);
+            transform: translateY(20px) scale(0.95);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .modal-overlay.open .modal-content {
+            transform: translateY(0) scale(1);
+        }
+
+        /* Form Elements */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-input, .form-select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: var(--surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.2s;
+        }
+        
+        option {
+            background-color: var(--surface);
+            color: var(--text-primary);
+        }
+
+        .form-input:focus, .form-select:focus {
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 3px var(--accent-primary-alpha);
+        }
+
+        /* Category Badge */
+        .category-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            display: inline-block;
+            background: rgba(59, 130, 246, 0.1); /* Default blue-ish */
+            color: #2563eb;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        [data-theme="dark"] .category-badge {
+            background: rgba(59, 130, 246, 0.2);
+            color: #93c5fd;
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid var(--border-subtle);
+            color: var(--text-secondary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--surface-elevated);
+            color: var(--text-primary);
+        }
+
+        .btn-primary {
+            background: var(--accent-primary);
+            border: none;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="navbar-content">
+            <a href="dashboard.html" class="logo">MindLog Admin</a>
+            <div class="nav-links">
+                <a href="dashboard.html" class="nav-link">Overview</a>
+                <a href="prompts.html" class="nav-link active">Manage Prompts</a>
+                <a href="../app/dashboard.html" class="nav-link">Main App</a>
+            </div>
+            <div class="user-section">
+                <span class="user-name" id="navDisplayName">Admin</span>
+                <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+                    <span id="themeIcon">☀️</span>
+                </button>
+                <button class="logout-btn" id="logoutBtn">Logout</button>
+                <button class="hamburger-btn" id="hamburgerBtn" aria-label="Menu">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="dashboard.html" class="mobile-nav-link">
+            <i data-lucide="layout-dashboard"></i> Overview
+        </a>
+        <a href="prompts.html" class="mobile-nav-link active">
+            <i data-lucide="edit-3"></i> Manage Prompts
+        </a>
+        <a href="../app/dashboard.html" class="mobile-nav-link">
+            <i data-lucide="home"></i> Main App
+        </a>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Header & Actions -->
+        <div class="page-header flex justify-between items-end mb-6">
+            <div>
+                <h1 class="greeting">Journal Prompts</h1>
+                <p class="subtitle">Manage system-wide prompts</p>
+            </div>
+            <button id="addPromptBtn" class="btn btn-primary flex items-center gap-2">
+                <i data-lucide="plus"></i> New Prompt
+            </button>
+        </div>
+
+        <!-- Prompts List -->
+        <div class="bg-surface border border-border-subtle rounded-xl overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-surface-elevated border-b border-border-subtle">
+                            <th class="p-4 font-semibold text-text-secondary w-2/3">Prompt Text</th>
+                            <th class="p-4 font-semibold text-text-secondary">Category</th>
+                            <th class="p-4 font-semibold text-text-secondary text-right">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="promptsTableBody">
+                        <!-- Rows injected via JS -->
+                        <tr>
+                            <td colspan="3" class="p-8 text-center text-text-secondary">Loading prompts...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Add/Edit -->
+    <!-- Modal for Add/Edit -->
+    <div id="promptModal" class="modal-overlay">
+        <div class="modal-content" id="promptModalContent">
+            <h2 class="text-xl font-bold mb-6 text-text-primary" id="modalTitle">New Prompt</h2>
+            <form id="promptForm">
+                <input type="hidden" id="promptId">
+                
+                <div class="form-group">
+                    <label class="form-label">Category</label>
+                    <div class="relative">
+                        <select id="promptCategory" class="form-select appearance-none" required>
+                            <!-- Options injected via JS -->
+                        </select>
+                        <i data-lucide="chevron-down" class="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-tertiary pointer-events-none"></i>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Prompt Text</label>
+                    <textarea id="promptText" rows="3" class="form-input resize-none" required placeholder="e.g., What are three things you are grateful for today?"></textarea>
+                </div>
+                
+                <div class="btn-group">
+                    <button type="button" id="cancelPromptBtn" class="btn btn-secondary">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Prompt</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../../assets/js/api.js"></script>
+    <script src="../../assets/js/admin.js"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

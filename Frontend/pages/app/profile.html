@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - MindLog</title>
+    <link href="../../assets/css/output.css" rel="stylesheet">
+    <link href="../../assets/css/dashboard-theme.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="navbar-content">
+            <a href="dashboard.html" class="logo">MindLog</a>
+            <div class="nav-links">
+                <a href="dashboard.html" class="nav-link">Dashboard</a>
+                <a href="categories.html" class="nav-link">Categories</a>
+                <a href="profile.html" class="nav-link active">Profile</a>
+            </div>
+            <div class="user-section">
+                <span class="user-name" id="navDisplayName">@user</span>
+                <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+                    <span id="themeIcon">☀️</span>
+                </button>
+                <button class="logout-btn" id="logoutBtn">Logout</button>
+                <button class="hamburger-btn" id="hamburgerBtn" aria-label="Menu">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="dashboard.html" class="mobile-nav-link">
+            <i data-lucide="layout-dashboard"></i> Dashboard
+        </a>
+        <a href="categories.html" class="mobile-nav-link">
+            <i data-lucide="folder-open"></i> Categories
+        </a>
+        <a href="profile.html" class="mobile-nav-link active">
+            <i data-lucide="user"></i> Profile
+        </a>
+    </div>
+
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Header -->
+        <div class="page-header">
+            <h1 class="greeting">Profile Settings</h1>
+            <p class="subtitle">Manage your account and preferences</p>
+        </div>
+
+        <!-- Profile Card -->
+        <div class="bg-light/5 backdrop-blur-xl border border-light/10 rounded-2xl p-8 mb-6" style="animation: fadeInUp 0.6s ease-out;">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold" style="color: var(--text-primary);">Account Information</h2>
+                <button id="editBtn" class="px-4 py-2 rounded-xl transition-all" style="background: var(--accent-primary); color: white; font-weight: 600;">
+                    <i data-lucide="edit-2" class="w-4 h-4 inline-block mr-2"></i>Edit Profile
+                </button>
+            </div>
+            
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium mb-2" style="color: var(--text-secondary);">Username</label>
+                    <div class="px-4 py-3 rounded-xl" style="background: var(--surface); border: 1px solid var(--border-subtle); color: var(--text-primary);">
+                        <span id="profileUsername">Loading...</span>
+                    </div>
+                    <p class="text-xs mt-1" style="color: var(--text-tertiary);">Username cannot be changed</p>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium mb-2" style="color: var(--text-secondary);">Email</label>
+                    <div class="px-4 py-3 rounded-xl" style="background: var(--surface); border: 1px solid var(--border-subtle); color: var(--text-primary);">
+                        <span id="profileEmail">Loading...</span>
+                    </div>
+                    <p class="text-xs mt-1" style="color: var(--text-tertiary);">Email cannot be changed</p>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium mb-2" style="color: var(--text-secondary);">First Name</label>
+                    <div id="firstNameView" class="px-4 py-3 rounded-xl" style="background: var(--surface); border: 1px solid var(--border-subtle); color: var(--text-primary);">
+                        <span id="profileFirstName">Loading...</span>
+                    </div>
+                    <input type="text" id="firstNameInput" class="hidden w-full px-4 py-3 rounded-xl transition-all" style="background: var(--surface); border: 2px solid var(--border-subtle); color: var(--text-primary);" placeholder="Enter first name">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium mb-2" style="color: var(--text-secondary);">Last Name</label>
+                    <div id="lastNameView" class="px-4 py-3 rounded-xl" style="background: var(--surface); border: 1px solid var(--border-subtle); color: var(--text-primary);">
+                        <span id="profileLastName">Loading...</span>
+                    </div>
+                    <input type="text" id="lastNameInput" class="hidden w-full px-4 py-3 rounded-xl transition-all" style="background: var(--surface); border: 2px solid var(--border-subtle); color: var(--text-primary);" placeholder="Enter last name">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium mb-2" style="color: var(--text-secondary);">Member Since</label>
+                    <div class="px-4 py-3 rounded-xl" style="background: var(--surface); border: 1px solid var(--border-subtle); color: var(--text-primary);">
+                        <span id="profileCreatedAt">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Preferences Card -->
+        <div class="bg-light/5 backdrop-blur-xl border border-light/10 rounded-2xl p-8 mb-6" style="animation: fadeInUp 0.6s ease-out 0.1s backwards;">
+            <h2 class="text-2xl font-bold mb-6" style="color: var(--text-primary);">Preferences</h2>
+            
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium mb-2" style="color: var(--text-secondary);">Theme</label>
+                    <div id="themeView" class="px-4 py-3 rounded-xl" style="background: var(--surface); border: 1px solid var(--border-subtle); color: var(--text-primary);">
+                        <span id="profileTheme">Loading...</span>
+                    </div>
+                    <select id="themeSelect" class="hidden w-full px-4 py-3 rounded-xl transition-all" style="background: var(--surface); border: 2px solid var(--border-subtle); color: var(--text-primary);">
+                        <option value="light">Light</option>
+                        <option value="dark">Dark</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium mb-2" style="color: var(--text-secondary);">Timezone</label>
+                    <div id="timezoneView" class="px-4 py-3 rounded-xl" style="background: var(--surface); border: 1px solid var(--border-subtle); color: var(--text-primary);">
+                        <span id="profileTimezone">Loading...</span>
+                    </div>
+                    <select id="timezoneSelect" class="hidden w-full px-4 py-3 rounded-xl transition-all" style="background: var(--surface); border: 2px solid var(--border-subtle); color: var(--text-primary);">
+                        <!-- Timezones will be populated by JavaScript -->
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons (Hidden by default) -->
+        <div id="actionButtons" class="hidden flex gap-4 mb-6">
+            <button id="saveBtn" class="flex-1 px-6 py-3 rounded-xl font-bold transition-all" style="background: linear-gradient(135deg, var(--accent-purple), var(--accent-primary)); color: white;">
+                Save Changes
+            </button>
+            <button id="cancelBtn" class="flex-1 px-6 py-3 rounded-xl font-medium transition-all" style="background: var(--surface); border: 2px solid var(--border-subtle); color: var(--text-primary);">
+                Cancel
+            </button>
+        </div>
+
+        <!-- Success/Error Message -->
+        <div id="messageBox" class="hidden p-4 rounded-xl mb-6"></div>
+
+    <!-- Scripts -->
+    <script src="../../assets/js/api.js"></script>
+    <script src="../../assets/js/nav.js"></script>
+    <script src="../../assets/js/profile.js"></script>
+    <script>
+        // Check auth
+        if (!api.isAuthenticated()) {
+            window.location.href = '../auth/login.html';
+        }
+
+        const logoutBtn = document.getElementById('logoutBtn');
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const html = document.documentElement;
+        
+        // Edit mode elements
+        const editBtn = document.getElementById('editBtn');
+        const saveBtn = document.getElementById('saveBtn');
+        const cancelBtn = document.getElementById('cancelBtn');
+        const actionButtons = document.getElementById('actionButtons');
+        const messageBox = document.getElementById('messageBox');
+        
+        let isEditMode = false;
+        let originalData = {};
+
+        // Comprehensive timezone list
+        const timezones = [
+            'UTC',
+            'America/New_York',
+            'America/Chicago',
+            'America/Denver',
+            'America/Los_Angeles',
+            'America/Anchorage',
+            'Pacific/Honolulu',
+            'America/Toronto',
+            'America/Vancouver',
+            'America/Mexico_City',
+            'America/Sao_Paulo',
+            'America/Buenos_Aires',
+            'Europe/London',
+            'Europe/Paris',
+            'Europe/Berlin',
+            'Europe/Madrid',
+            'Europe/Rome',
+            'Europe/Amsterdam',
+            'Europe/Brussels',
+            'Europe/Vienna',
+            'Europe/Stockholm',
+            'Europe/Moscow',
+            'Europe/Istanbul',
+            'Africa/Cairo',
+            'Africa/Johannesburg',
+            'Africa/Lagos',
+            'Africa/Nairobi',
+            'Asia/Dubai',
+            'Asia/Kolkata',
+            'Asia/Shanghai',
+            'Asia/Tokyo',
+            'Asia/Seoul',
+            'Asia/Hong_Kong',
+            'Asia/Singapore',
+            'Asia/Bangkok',
+            'Asia/Jakarta',
+            'Australia/Sydney',
+            'Australia/Melbourne',
+            'Australia/Brisbane',
+            'Pacific/Auckland',
+            'Pacific/Fiji'
+        ];
+
+        // Populate timezone dropdown
+        function populateTimezones() {
+            const select = document.getElementById('timezoneSelect');
+            timezones.forEach(tz => {
+                const option = document.createElement('option');
+                option.value = tz;
+                option.textContent = tz.replace(/_/g, ' ');
+                select.appendChild(option);
+            });
+        }
+
+        // Load saved theme
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        html.setAttribute('data-theme', savedTheme);
+        themeIcon.textContent = savedTheme === 'dark' ? '🌙' : '☀️';
+
+        // Theme toggle
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            themeIcon.textContent = newTheme === 'dark' ? '🌙' : '☀️';
+            
+            // Update profile theme display if not in edit mode
+            if (!isEditMode) {
+                document.getElementById('profileTheme').textContent = newTheme.charAt(0).toUpperCase() + newTheme.slice(1);
+            }
+        });
+
+        // Toggle edit mode
+        function toggleEditMode(enable) {
+            isEditMode = enable;
+            
+            // Toggle visibility of view/edit elements
+            document.getElementById('firstNameView').classList.toggle('hidden', enable);
+            document.getElementById('firstNameInput').classList.toggle('hidden', !enable);
+            
+            document.getElementById('lastNameView').classList.toggle('hidden', enable);
+            document.getElementById('lastNameInput').classList.toggle('hidden', !enable);
+            
+            document.getElementById('themeView').classList.toggle('hidden', enable);
+            document.getElementById('themeSelect').classList.toggle('hidden', !enable);
+            
+            document.getElementById('timezoneView').classList.toggle('hidden', enable);
+            document.getElementById('timezoneSelect').classList.toggle('hidden', !enable);
+            
+            // Toggle buttons
+            editBtn.classList.toggle('hidden', enable);
+            actionButtons.classList.toggle('hidden', !enable);
+            
+            if (enable) {
+                // Populate input fields with current values
+                document.getElementById('firstNameInput').value = originalData.firstName || '';
+                document.getElementById('lastNameInput').value = originalData.lastName || '';
+                document.getElementById('themeSelect').value = html.getAttribute('data-theme');
+                document.getElementById('timezoneSelect').value = originalData.timezone || 'UTC';
+            }
+        }
+
+        // Show message
+        function showMessage(message, isError = false) {
+            messageBox.textContent = message;
+            messageBox.style.background = isError ? 'rgba(239, 68, 68, 0.1)' : 'rgba(34, 197, 94, 0.1)';
+            messageBox.style.border = isError ? '1px solid rgba(239, 68, 68, 0.3)' : '1px solid rgba(34, 197, 94, 0.3)';
+            messageBox.style.color = isError ? '#ef4444' : '#22c55e';
+            messageBox.classList.remove('hidden');
+            
+            setTimeout(() => {
+                messageBox.classList.add('hidden');
+            }, 5000);
+        }
+
+        // Edit button click
+        editBtn.addEventListener('click', () => {
+            toggleEditMode(true);
+        });
+
+        // Cancel button click
+        cancelBtn.addEventListener('click', () => {
+            toggleEditMode(false);
+        });
+
+        // Save button click
+        saveBtn.addEventListener('click', async () => {
+            try {
+                saveBtn.disabled = true;
+                saveBtn.textContent = 'Saving...';
+                
+                const firstName = document.getElementById('firstNameInput').value.trim();
+                const lastName = document.getElementById('lastNameInput').value.trim();
+                const theme = document.getElementById('themeSelect').value;
+                const timezone = document.getElementById('timezoneSelect').value;
+                
+                // Update profile using existing /auth/update route
+                const profileResponse = await api.request('/auth/update', 'PUT', {
+                    firstName: firstName,
+                    lastName: lastName
+                });
+                
+                if (!profileResponse.success) {
+                    showMessage(profileResponse.message || 'Failed to update profile', true);
+                    return;
+                }
+                
+                // Update preferences using existing /auth/updatePreferences route
+                const preferencesResponse = await api.request('/auth/updatePreferences', 'PUT', {
+                    theme: theme,
+                    timeZone: timezone,
+                    remainderTime: '09:00' // Default reminder time
+                });
+                
+                if (!preferencesResponse.success) {
+                    showMessage(preferencesResponse.message || 'Failed to update preferences', true);
+                    return;
+                }
+                
+                // Update displayed values
+                document.getElementById('profileFirstName').textContent = firstName || 'N/A';
+                document.getElementById('profileLastName').textContent = lastName || 'N/A';
+                document.getElementById('profileTheme').textContent = theme.charAt(0).toUpperCase() + theme.slice(1);
+                document.getElementById('profileTimezone').textContent = timezone;
+                
+                // Update theme if changed
+                if (theme !== html.getAttribute('data-theme')) {
+                    html.setAttribute('data-theme', theme);
+                    localStorage.setItem('theme', theme);
+                    themeIcon.textContent = theme === 'dark' ? '🌙' : '☀️';
+                }
+                
+                // Update original data
+                originalData.firstName = firstName;
+                originalData.lastName = lastName;
+                originalData.timezone = timezone;
+                
+                toggleEditMode(false);
+                showMessage('Profile updated successfully!', false);
+            } catch (error) {
+                console.error('Failed to save profile:', error);
+                showMessage(error.message || 'Failed to update profile', true);
+            } finally {
+                saveBtn.disabled = false;
+                saveBtn.textContent = 'Save Changes';
+            }
+        });
+
+        // Load user profile
+        async function loadProfile() {
+            try {
+                const response = await api.request('/auth/me', 'GET');
+                
+                if (response.success) {
+                    const username = response.username || 'N/A';
+                    const firstName = response.profile?.firstName || 'N/A';
+                    const lastName = response.profile?.lastName || 'N/A';
+                    const timezone = response.preferences?.timeZone || Intl.DateTimeFormat().resolvedOptions().timeZone;
+                    
+                    document.getElementById('profileUsername').textContent = username;
+                    document.getElementById('navDisplayName').textContent = '@' + username;
+                    document.getElementById('profileEmail').textContent = response.email || 'N/A';
+                    document.getElementById('profileFirstName').textContent = firstName;
+                    document.getElementById('profileLastName').textContent = lastName;
+                    
+                    const createdDate = new Date(response.createdAt).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                    });
+                    document.getElementById('profileCreatedAt').textContent = createdDate;
+                    
+                    const currentTheme = html.getAttribute('data-theme');
+                    document.getElementById('profileTheme').textContent = currentTheme.charAt(0).toUpperCase() + currentTheme.slice(1);
+                    document.getElementById('profileTimezone').textContent = timezone;
+                    
+                    // Store original data
+                    originalData = {
+                        firstName: firstName === 'N/A' ? '' : firstName,
+                        lastName: lastName === 'N/A' ? '' : lastName,
+                        timezone: timezone
+                    };
+                }
+            } catch (error) {
+                console.error('Failed to load profile:', error);
+            }
+        }
+
+        // Event listeners
+        logoutBtn.addEventListener('click', () => api.logout());
+
+        // Initialize
+        populateTimezones();
+        loadProfile();
+        
+        // Refresh icons after dynamic content loads
+        setTimeout(() => lucide.createIcons(), 100);
+    </script>
+</body>
+</html>

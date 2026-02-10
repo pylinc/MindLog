@@ -1,13 +1,14 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./**/*.{html,js}"],
+  content: ["../**/*.{html,js}"],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
-        primary: '#4f46e5', // Indigo 600
-        secondary: '#ec4899', // Pink 500
-        dark: '#0f172a', // Slate 900
-        light: '#f8fafc', // Slate 50
+        primary: '#4f46e5',
+        secondary: '#ec4899',
+        dark: '#0f172a',
+        light: '#f8fafc',
         glass: 'rgba(255, 255, 255, 0.1)',
       },
       fontFamily: {

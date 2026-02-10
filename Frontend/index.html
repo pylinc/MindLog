@@ -4,89 +4,200 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MindLog - Your Personal Growth Journal</title>
-    <link href="./css/output.css" rel="stylesheet">
+    <link href="./assets/css/output.css" rel="stylesheet">
+    <link href="./assets/css/dashboard-theme.css" rel="stylesheet">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
     <!-- Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
-<body class="bg-dark text-light font-sans antialiased overflow-x-hidden selection:bg-secondary selection:text-white">
-
-    <!-- Gradient Background -->
-    <div class="fixed inset-0 z-[-1]">
-        <div class="absolute top-0 left-1/4 w-96 h-96 bg-primary/30 rounded-full blur-[128px] animate-pulse"></div>
-        <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-secondary/20 rounded-full blur-[128px] animate-pulse" style="animation-duration: 4s;"></div>
-    </div>
+<body>
 
     <!-- Navigation -->
-    <nav class="fixed w-full z-50 transition-all duration-300 backdrop-blur-md border-b border-light/10" id="navbar">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-20">
-                <div class="flex items-center">
-                    <a href="#" class="text-2xl font-display font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-secondary">
-                        MindLog
-                    </a>
-                </div>
-                <div class="hidden md:flex space-x-8 items-center">
-                    <a href="#features" class="text-gray-300 hover:text-white transition-colors">Features</a>
-                    <a href="#about" class="text-gray-300 hover:text-white transition-colors">About</a>
-                    <a href="login.html" class="px-5 py-2 rounded-full border border-light/20 hover:bg-light/10 transition-all">Login</a>
-                    <a href="signup.html" class="px-5 py-2 rounded-full bg-gradient-to-r from-primary to-secondary text-white font-medium hover:shadow-lg hover:shadow-primary/50 transition-all transform hover:-translate-y-0.5">Get Started</a>
-                </div>
-                <!-- Mobile menu button -->
-                <div class="md:hidden flex items-center">
-                    <button class="text-gray-300 hover:text-white mobile-menu-button">
-                        <i data-lucide="menu"></i>
-                    </button>
-                </div>
+    <nav class="navbar">
+        <div class="navbar-content">
+            <div class="logo">MindLog</div>
+            <div class="nav-links">
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#about" class="nav-link">About</a>
             </div>
-        </div>
-        <!-- Mobile Menu -->
-        <div class="md:hidden hidden mobile-menu bg-dark/95 backdrop-blur-xl border-b border-light/10">
-            <a href="#features" class="block py-4 px-6 text-sm hover:bg-light/5">Features</a>
-            <a href="#about" class="block py-4 px-6 text-sm hover:bg-light/5">About</a>
-            <a href="login.html" class="block py-4 px-6 text-sm hover:bg-light/5 text-primary">Login</a>
-            <a href="signup.html" class="block py-4 px-6 text-sm hover:bg-light/5 text-secondary font-bold">Sign Up</a>
+            <div class="user-section">
+                <a href="/pages/auth/login.html" class="nav-link">Login</a>
+                <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+                    <span id="themeIcon">☀️</span>
+                </button>
+                <a href="/pages/auth/signup.html" class="btn-primary">Get Started</a>
+            </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="min-h-screen pt-40 pb-20 relative overflow-hidden">
-        <div class="text-center px-4 max-w-5xl mx-auto">
-            <div class="animate-fade-in-up">
-                <span class="inline-flex items-center gap-2 px-4 py-1.5 mb-6 rounded-full bg-light/5 border border-light/10 text-sm font-medium text-blue-300 backdrop-blur-sm">
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Hero Section -->
+        <section style="min-height: 90vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 1rem 1rem 3rem; position: relative; z-index: 10;">
+            <div style="max-width: 900px;">
+                <span style="display: inline-block; padding: 0.5rem 1.5rem; margin-bottom: 1.5rem; border-radius: 50px; background: var(--surface); border: 1px solid var(--border-subtle); color: var(--accent-primary); font-size: 0.9rem; font-weight: 600;">
                     ✨ Reimagine your journaling experience
                 </span>
-                <h1 class="text-5xl md:text-7xl font-display font-bold leading-tight mb-6">
+                <h1 style="font-family: 'Fraunces', serif; font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 700; line-height: 1.2; margin-bottom: 1.5rem; color: var(--text-primary);">
                     Capture Your Thoughts, <br />
-                    <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-primary to-secondary">
+                    <span style="background: linear-gradient(135deg, var(--accent-purple), var(--accent-primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
                         Unlock Your Potential
                     </span>
                 </h1>
-                <p class="text-xl text-gray-400 mb-10 max-w-2xl mx-auto leading-relaxed">
+                <p style="font-size: 1.25rem; color: var(--text-secondary); margin-bottom: 2.5rem; max-width: 700px; margin-left: auto; margin-right: auto; line-height: 1.6;">
                     A secure, intelligent, and beautiful space to reflect on your day, track your moods, and grow as a person.
                 </p>
-                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                    <a href="signup.html" class="px-8 py-4 rounded-full bg-white text-dark font-bold text-lg hover:bg-gray-100 transition-all shadow-xl hover:shadow-white/20 transform hover:-translate-y-1 w-full sm:w-auto">
+                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; position: relative; z-index: 20;">
+                    <a href="/pages/auth/signup.html" class="btn-primary">
                         Start Journaling Free
                     </a>
-                    <a href="#demo" class="px-8 py-4 rounded-full border border-light/20 hover:bg-light/10 transition-all text-lg font-medium w-full sm:w-auto backdrop-blur-sm flex items-center justify-center gap-2 group">
-                        <i data-lucide="play-circle" class="w-5 h-5 group-hover:text-primary transition-colors"></i>
-                        Watch Demo
+                    <a href="#features" class="btn-secondary">
+                        Learn More
                     </a>
                 </div>
             </div>
-            
-            <!-- Floating Elements Mockup -->
-            <div class="mt-20 relative animate-on-scroll delay-200">
-                <div class="absolute inset-0 bg-gradient-to-t from-dark to-transparent z-10 h-full bottom-0"></div>
-                <!-- Placeholder for App Dashboard Image/Mockup -->
-                <div class="bg-light/5 border border-light/10 rounded-t-2xl p-2 md:p-4 max-w-4xl mx-auto backdrop-blur-md shadow-2xl">
-                    <div class="aspect-video bg-dark rounded-lg flex items-center justify-center overflow-hidden relative group">
-                        <div class="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20 opacity-50 group-hover:opacity-70 transition-opacity"></div>
-                        <p class="text-light/50 font-display text-lg">Dashboard Preview</p>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" style="padding: 4rem 2rem;">
+                        <!-- Left Sidebar -->
+                        <div class="w-20 bg-[#13161C] border-r border-white/5 flex flex-col items-center py-6 hidden sm:flex z-20">
+                            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-blue-600 flex items-center justify-center text-white shadow-lg shadow-primary/20 mb-8">
+                                <i data-lucide="feather" class="w-5 h-5"></i>
+                            </div>
+                            
+                            <div class="space-y-6 w-full flex flex-col items-center">
+                                <div class="w-10 h-10 rounded-xl bg-white/5 text-white flex items-center justify-center border border-white/10 relative">
+                                    <div class="absolute -left-3 top-1/2 -translate-y-1/2 w-1 h-5 bg-primary rounded-r-full"></div>
+                                    <i data-lucide="layout-grid" class="w-5 h-5"></i>
+                                </div>
+                                <div class="w-10 h-10 rounded-xl text-gray-500 hover:bg-white/5 hover:text-white flex items-center justify-center transition-all cursor-pointer">
+                                    <i data-lucide="book-open" class="w-5 h-5"></i>
+                                </div>
+                                <div class="w-10 h-10 rounded-xl text-gray-500 hover:bg-white/5 hover:text-white flex items-center justify-center transition-all cursor-pointer">
+                                    <i data-lucide="bar-chart-2" class="w-5 h-5"></i>
+                                </div>
+                                <div class="w-10 h-10 rounded-xl text-gray-500 hover:bg-white/5 hover:text-white flex items-center justify-center transition-all cursor-pointer">
+                                    <i data-lucide="mic" class="w-5 h-5"></i>
+                                </div>
+                            </div>
+
+                            <div class="mt-auto">
+                                <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-gray-700 to-gray-600 border border-white/10 p-0.5">
+                                    <img src="https://ui-avatars.com/api/?name=User&background=random" alt="User" class="w-full h-full rounded-full">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Main Content Area -->
+                        <div class="flex-1 bg-gradient-to-br from-[#0F1115] to-[#13161C] p-8 overflow-hidden relative">
+                            <!-- Header -->
+                            <div class="flex justify-between items-center mb-8">
+                                <div>
+                                    <h3 class="text-2xl font-bold text-white mb-1">Good Evening, <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-primary">Alex</span></h3>
+                                    <p class="text-gray-400 text-sm">Ready to capture your thoughts?</p>
+                                </div>
+                                <div class="flex items-center gap-4">
+                                    <div class="h-10 px-4 rounded-full bg-white/5 border border-white/5 flex items-center gap-2 text-gray-400 text-sm">
+                                        <i data-lucide="search" class="w-4 h-4"></i>
+                                        <span>Search entries...</span>
+                                    </div>
+                                    <button class="h-10 w-10 rounded-full bg-white/5 border border-white/5 flex items-center justify-center text-white hover:bg-white/10 transition-colors relative">
+                                        <div class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-[#13161C]"></div>
+                                        <i data-lucide="bell" class="w-4 h-4"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Dashboard Montage -->
+                            <div class="grid grid-cols-3 gap-6 h-full pb-10">
+                                <!-- Main Column -->
+                                <div class="col-span-2 space-y-6">
+                                    <!-- Featured Widget -->
+                                    <div class="h-48 rounded-2xl bg-gradient-to-r from-primary/10 via-blue-600/10 to-transparent border border-white/5 p-6 relative overflow-hidden flex flex-col justify-center gap-4 group/widget cursor-pointer hover:border-white/10 transition-all">
+                                        <div class="absolute inset-0 bg-gradient-to-r from-primary/10 to-transparent opacity-0 group-hover/widget:opacity-100 transition-opacity"></div>
+                                        <div class="flex items-center gap-2 text-primary text-sm font-medium">
+                                            <i data-lucide="sparkles" class="w-4 h-4"></i> Daily Prompt
+                                        </div>
+                                        <h4 class="text-2xl font-bold text-white max-w-md leading-tight">"What's one small victory you celebrated today?"</h4>
+                                        <div class="flex items-center gap-3 mt-2">
+                                            <button class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-primary to-blue-600 text-white font-medium text-sm shadow-lg shadow-primary/25 hover:shadow-primary/40 transition-all transform hover:-translate-y-0.5">
+                                                Start Writing
+                                            </button>
+                                            <button class="px-4 py-2.5 rounded-xl bg-white/5 text-white font-medium text-sm hover:bg-white/10 transition-all">
+                                                Shuffle
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Recent Entries Grid -->
+                                    <div class="grid grid-cols-2 gap-4">
+                                        <!-- Entry Card 1 -->
+                                        <div class="p-5 rounded-2xl bg-[#181B21] border border-white/5 hover:border-primary/30 hover:-translate-y-1 transition-all cursor-pointer group/card h-40 flex flex-col justify-between">
+                                            <div>
+                                                <div class="flex justify-between items-start mb-3">
+                                                    <span class="text-xs font-bold px-2 py-1 rounded-md bg-yellow-500/10 text-yellow-500 border border-yellow-500/10">High Energy</span>
+                                                    <i data-lucide="more-horizontal" class="w-4 h-4 text-gray-500 group-hover/card:text-white transition-colors"></i>
+                                                </div>
+                                                <h5 class="text-white font-semibold mb-1 group-hover/card:text-primary transition-colors">Productive morning workflow</h5>
+                                                <p class="text-xs text-gray-500 line-clamp-2">Finally cracked the code on my new project structure utilizing...</p>
+                                            </div>
+                                            <div class="flex items-center gap-2 text-xs text-gray-500">
+                                                <i data-lucide="clock" class="w-3 h-3"></i> 2 hours ago
+                                            </div>
+                                        </div>
+
+                                        <!-- Entry Card 2 -->
+                                        <div class="p-5 rounded-2xl bg-[#181B21] border border-white/5 hover:border-purple-500/30 hover:-translate-y-1 transition-all cursor-pointer group/card h-40 flex flex-col justify-between">
+                                            <div>
+                                                <div class="flex justify-between items-start mb-3">
+                                                    <span class="text-xs font-bold px-2 py-1 rounded-md bg-purple-500/10 text-purple-400 border border-purple-500/10">Reflection</span>
+                                                    <i data-lucide="more-horizontal" class="w-4 h-4 text-gray-500 group-hover/card:text-white transition-colors"></i>
+                                                </div>
+                                                <h5 class="text-white font-semibold mb-1 group-hover/card:text-purple-400 transition-colors">Deep thoughts on balance</h5>
+                                                <p class="text-xs text-gray-500 line-clamp-2">Sometimes taking a step back is the only way to move forward...</p>
+                                            </div>
+                                            <div class="flex items-center gap-2 text-xs text-gray-500">
+                                                <i data-lucide="clock" class="w-3 h-3"></i> Yesterday
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Right Column (Stats) -->
+                                <div class="space-y-4">
+                                    <!-- Mood Chart -->
+                                    <div class="p-5 rounded-2xl bg-[#181B21] border border-white/5 h-48 relative overflow-hidden group/stats">
+                                        <div class="flex justify-between items-center mb-6">
+                                            <h5 class="text-sm font-bold text-white">Mood Flow</h5>
+                                            <span class="text-xs text-primary bg-primary/10 px-2 py-1 rounded-md border border-primary/10">+12%</span>
+                                        </div>
+                                        
+                                        <!-- Simulated Chart -->
+                                        <div class="absolute bottom-0 left-0 right-0 h-24 flex items-end px-4 gap-2">
+                                            <div class="w-1/6 bg-white/5 rounded-t-sm h-[30%] group-hover/stats:h-[40%] transition-all duration-500"></div>
+                                            <div class="w-1/6 bg-white/5 rounded-t-sm h-[50%] group-hover/stats:h-[60%] transition-all duration-500 delay-75"></div>
+                                            <div class="w-1/6 bg-white/10 rounded-t-sm h-[40%] group-hover/stats:h-[45%] transition-all duration-500 delay-100"></div>
+                                            <div class="w-1/6 bg-gradient-to-t from-primary/50 to-primary rounded-t-sm h-[80%] shadow-[0_0_15px_rgba(59,130,246,0.5)] group-hover/stats:h-[90%] transition-all duration-500 delay-150"></div>
+                                            <div class="w-1/6 bg-white/10 rounded-t-sm h-[60%] group-hover/stats:h-[70%] transition-all duration-500 delay-200"></div>
+                                            <div class="w-1/6 bg-white/5 rounded-t-sm h-[45%] group-hover/stats:h-[55%] transition-all duration-500 delay-300"></div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Mini Widgets -->
+                                    <div class="h-40 rounded-2xl bg-gradient-to-br from-purple-500/10 to-transparent border border-white/5 p-5 flex flex-col justify-center items-center text-center relative overflow-hidden">
+                                        <div class="absolute top-0 right-0 w-20 h-20 bg-purple-500/20 rounded-full blur-2xl"></div>
+                                        <div class="w-12 h-12 rounded-full bg-purple-500/20 text-purple-300 flex items-center justify-center mb-3 text-xl">🔥</div>
+                                        <div class="text-3xl font-bold text-white mb-1">14 Days</div>
+                                        <p class="text-xs text-purple-300 font-medium">Ordering Streak</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -145,18 +256,36 @@
     </footer>
 
     <!-- Scripts -->
-    <script src="./js/main.js"></script>
     <script>
         // Icon initialization
         lucide.createIcons();
 
-        // Mobile menu toggle
-        const btn = document.querySelector('button.mobile-menu-button');
-        const menu = document.querySelector('.mobile-menu');
+        // Theme toggle functionality (matching dashboard)
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        const themeIcon = document.getElementById('themeIcon');
+        
+        // Apply saved theme on page load
+        if (savedTheme === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            if (themeIcon) themeIcon.textContent = '🌙';
+        } else {
+            document.documentElement.setAttribute('data-theme', 'light');
+            if (themeIcon) themeIcon.textContent = '☀️';
+        }
 
-        btn.addEventListener('click', () => {
-            menu.classList.toggle('hidden');
-        });
+        // Theme toggle button handler
+        const themeToggleBtn = document.getElementById('themeToggle');
+        if (themeToggleBtn) {
+            themeToggleBtn.addEventListener('click', function() {
+                const currentTheme = document.documentElement.getAttribute('data-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                if (themeIcon) {
+                    themeIcon.textContent = newTheme === 'dark' ? '🌙' : '☀️';
+                }
+            });
+        }
     </script>
 </body>
 </html>
