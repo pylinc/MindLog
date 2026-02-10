@@ -183,7 +183,13 @@
         // Load saved theme
         const savedTheme = localStorage.getItem('theme') || 'light';
         html.setAttribute('data-theme', savedTheme);
-        themeIcon.textContent = savedTheme === 'dark' ? '🌙' : '☀️';
+        if (savedTheme === 'dark') {
+            html.classList.add('dark');
+            themeIcon.textContent = '🌙';
+        } else {
+            html.classList.remove('dark');
+            themeIcon.textContent = '☀️';
+        }
 
         themeToggle.addEventListener('click', () => {
             const currentTheme = html.getAttribute('data-theme');
@@ -191,7 +197,14 @@
             
             html.setAttribute('data-theme', newTheme);
             localStorage.setItem('theme', newTheme);
-            themeIcon.textContent = newTheme === 'dark' ? '🌙' : '☀️';
+            
+            if (newTheme === 'dark') {
+                html.classList.add('dark');
+                themeIcon.textContent = '🌙';
+            } else {
+                html.classList.remove('dark');
+                themeIcon.textContent = '☀️';
+            }
         });
     </script>
 </body>

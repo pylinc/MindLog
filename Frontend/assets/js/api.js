@@ -1,17 +1,13 @@
-// API Configuration
-// Automatically use production backend when deployed, localhost when developing
 const API_URL = window.location.hostname === 'localhost' 
     ? 'http://localhost:3000/api'
     : 'https://mindlog-wb66.onrender.com/api'; 
 
 const api = {
-    // Generic request handler
     async request(endpoint, method = 'GET', body = null) {
         const headers = {
             'Content-Type': 'application/json',
         };
 
-        // Add token if it exists
         const token = localStorage.getItem('token');
         if (token) {
             headers['Authorization'] = `Bearer ${token}`;
@@ -31,33 +27,27 @@ const api = {
             const data = await response.json();
 
             if (!response.ok) {
-                // Auto-redirect on Auth failures
                 if (response.status === 401 || response.status === 403) {
                     localStorage.removeItem('token');
                     localStorage.removeItem('user');
-                    // Prevent redirect loop if already on login
                     if (!window.location.pathname.includes('login.html')) {
                         window.location.href = '../auth/login.html';
                     }
                 }
 
-                // If there are validation errors, format them nicely
                 if (data.errors && Array.isArray(data.errors)) {
                     const errorMessages = data.errors.map(err => err.message).join(', ');
                     throw new Error(errorMessages);
                 }
-                // Otherwise throw the general message
                 throw new Error(data.message || `HTTP ${response.status}: ${response.statusText}`);
             }
 
             return data;
         } catch (error) {
-            // Re-throw to be caught by the calling function
             throw error;
         }
     },
 
-    // Auth methods
     async login(identifier, password) {
         return this.request('/auth/login', 'POST', { identifier, password });
     },
@@ -72,12 +62,10 @@ const api = {
         window.location.href = 'index.html';
     },
 
-    // Helper to check if user is logged in
     isAuthenticated() {
         return !!localStorage.getItem('token');
     },
 
-    // Journal methods
     async getRandomPrompt(excludeId) {
         const url = excludeId ? `/prompt/random?exclude=${excludeId}` : '/prompt/random';
         return this.request(url, 'GET');
@@ -88,7 +76,6 @@ const api = {
     }
 };
 
-// UI Helpers
 const ui = {
     showError(elementId, message) {
         const el = document.getElementById(elementId);

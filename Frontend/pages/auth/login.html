@@ -81,19 +81,32 @@
         lucide.createIcons();
         
         // Theme toggle functionality
+        // Theme toggle functionality
         const savedTheme = localStorage.getItem('theme') || 'light';
         const themeIcon = document.getElementById('themeIcon');
+        document.documentElement.setAttribute('data-theme', savedTheme);
         if (savedTheme === 'dark') {
-            document.documentElement.setAttribute('data-theme', 'dark');
+            document.documentElement.classList.add('dark');
             if (themeIcon) themeIcon.textContent = '🌙';
+        } else {
+            document.documentElement.classList.remove('dark');
+            if (themeIcon) themeIcon.textContent = '☀️';
         }
         
         document.getElementById('themeToggle').addEventListener('click', function() {
             const currentTheme = document.documentElement.getAttribute('data-theme');
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
             document.documentElement.setAttribute('data-theme', newTheme);
             localStorage.setItem('theme', newTheme);
-            if (themeIcon) themeIcon.textContent = newTheme === 'dark' ? '🌙' : '☀️';
+            
+            if (newTheme === 'dark') {
+                document.documentElement.classList.add('dark');
+                if (themeIcon) themeIcon.textContent = '🌙';
+            } else {
+                document.documentElement.classList.remove('dark');
+                if (themeIcon) themeIcon.textContent = '☀️';
+            }
         });
         
         const loginForm = document.getElementById('loginForm');

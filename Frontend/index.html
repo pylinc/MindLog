@@ -12,6 +12,64 @@
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
     <!-- Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* Direct Theme Overrides - Matching Dashboard Theme */
+        html.dark body {
+            background-color: #0F1115; /* Dashboard Background */
+            color: #ffffff;
+        }
+
+        html.dark #features {
+            background-color: #0F1115 !important;
+        }
+
+        html.dark #science {
+            background-color: #181B21 !important; /* Dashboard Surface */
+            margin-bottom: 2rem !important; /* Add spacing before footer */
+            border-bottom: 1px solid #2d333b;
+        }
+
+        html.dark footer {
+            background-color: #0F1115 !important;
+            border-top: 1px solid #2d333b !important; /* Dashboard Border */
+        }
+        
+        html.dark .feature-card {
+            background-color: #181B21 !important; /* Dashboard Surface */
+            border-color: #2d333b !important;
+        }
+
+        html.dark .research-card {
+            background-color: #252525 !important; /* Dashboard Elevated Surface for cards inside Science section */
+            border-color: #2d333b !important;
+        }
+
+        html.dark .text-adaptive {
+            color: #ffffff !important;
+        }
+
+        html.dark .text-muted-adaptive {
+            color: #9ca3af !important; /* text-secondary from dashboard */
+        }
+
+        /* Light Mode Defaults */
+        #features, #science, footer {
+            background-color: #f8fafc;
+        }
+
+        .feature-card, .research-card {
+            background-color: #ffffff;
+            border-color: #e2e8f0;
+        }
+
+        .text-adaptive {
+            color: #0f172a;
+        }
+
+        .text-muted-adaptive {
+            color: #475569;
+        }
+    </style>
 </head>
 <body>
 
@@ -62,195 +120,216 @@
             </div>
         </section>
 
-        <!-- Features Section -->
-        <section id="features" style="padding: 4rem 2rem;">
-                        <!-- Left Sidebar -->
-                        <div class="w-20 bg-[#13161C] border-r border-white/5 flex flex-col items-center py-6 hidden sm:flex z-20">
-                            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-blue-600 flex items-center justify-center text-white shadow-lg shadow-primary/20 mb-8">
-                                <i data-lucide="feather" class="w-5 h-5"></i>
-                            </div>
-                            
-                            <div class="space-y-6 w-full flex flex-col items-center">
-                                <div class="w-10 h-10 rounded-xl bg-white/5 text-white flex items-center justify-center border border-white/10 relative">
-                                    <div class="absolute -left-3 top-1/2 -translate-y-1/2 w-1 h-5 bg-primary rounded-r-full"></div>
-                                    <i data-lucide="layout-grid" class="w-5 h-5"></i>
-                                </div>
-                                <div class="w-10 h-10 rounded-xl text-gray-500 hover:bg-white/5 hover:text-white flex items-center justify-center transition-all cursor-pointer">
-                                    <i data-lucide="book-open" class="w-5 h-5"></i>
-                                </div>
-                                <div class="w-10 h-10 rounded-xl text-gray-500 hover:bg-white/5 hover:text-white flex items-center justify-center transition-all cursor-pointer">
-                                    <i data-lucide="bar-chart-2" class="w-5 h-5"></i>
-                                </div>
-                                <div class="w-10 h-10 rounded-xl text-gray-500 hover:bg-white/5 hover:text-white flex items-center justify-center transition-all cursor-pointer">
-                                    <i data-lucide="mic" class="w-5 h-5"></i>
-                                </div>
-                            </div>
+        <!-- Device Preview Section -->
+        <section id="preview" style="padding: 2rem 1rem 6rem; position: relative; z-index: 5;">
+            <div class="max-w-7xl mx-auto relative">
+                <!-- Laptop View -->
+                <div class="relative z-10 rounded-2xl border-[8px] border-gray-800 bg-gray-900 shadow-2xl overflow-hidden mx-auto" style="max-width: 1000px; aspect-ratio: 16/10;">
+                    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-4 bg-gray-800 rounded-b-xl z-20"></div>
+                    <img src="./assets/mindlog_landing_mockup.png" alt="Dashboard Laptop View" class="w-full h-full object-cover">
+                </div>
 
-                            <div class="mt-auto">
-                                <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-gray-700 to-gray-600 border border-white/10 p-0.5">
-                                    <img src="https://ui-avatars.com/api/?name=User&background=random" alt="User" class="w-full h-full rounded-full">
-                                </div>
-                            </div>
-                        </div>
+                <!-- Phone View (Overlapping) -->
+                <div class="absolute -bottom-12 -right-4 md:-right-12 z-20 w-[280px] md:w-[320px] rounded-[2.5rem] border-[8px] border-gray-800 bg-gray-900 shadow-2xl overflow-hidden hidden sm:block">
+                    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-gray-800 rounded-b-xl z-20"></div>
+                    <img src="https://placehold.co/400x850/13161C/FFFFFF?text=Mobile+View" alt="Dashboard Phone View" class="w-full h-full object-cover" style="aspect-ratio: 9/19.5;">
+                </div>
+            </div>
 
-                        <!-- Main Content Area -->
-                        <div class="flex-1 bg-gradient-to-br from-[#0F1115] to-[#13161C] p-8 overflow-hidden relative">
-                            <!-- Header -->
-                            <div class="flex justify-between items-center mb-8">
-                                <div>
-                                    <h3 class="text-2xl font-bold text-white mb-1">Good Evening, <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-primary">Alex</span></h3>
-                                    <p class="text-gray-400 text-sm">Ready to capture your thoughts?</p>
-                                </div>
-                                <div class="flex items-center gap-4">
-                                    <div class="h-10 px-4 rounded-full bg-white/5 border border-white/5 flex items-center gap-2 text-gray-400 text-sm">
-                                        <i data-lucide="search" class="w-4 h-4"></i>
-                                        <span>Search entries...</span>
-                                    </div>
-                                    <button class="h-10 w-10 rounded-full bg-white/5 border border-white/5 flex items-center justify-center text-white hover:bg-white/10 transition-colors relative">
-                                        <div class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-[#13161C]"></div>
-                                        <i data-lucide="bell" class="w-4 h-4"></i>
-                                    </button>
-                                </div>
-                            </div>
+             <!-- Background Glow -->
+             <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[100%] bg-primary/10 blur-[100px] -z-10 rounded-full"></div>
+        </section>
 
-                            <!-- Dashboard Montage -->
-                            <div class="grid grid-cols-3 gap-6 h-full pb-10">
-                                <!-- Main Column -->
-                                <div class="col-span-2 space-y-6">
-                                    <!-- Featured Widget -->
-                                    <div class="h-48 rounded-2xl bg-gradient-to-r from-primary/10 via-blue-600/10 to-transparent border border-white/5 p-6 relative overflow-hidden flex flex-col justify-center gap-4 group/widget cursor-pointer hover:border-white/10 transition-all">
-                                        <div class="absolute inset-0 bg-gradient-to-r from-primary/10 to-transparent opacity-0 group-hover/widget:opacity-100 transition-opacity"></div>
-                                        <div class="flex items-center gap-2 text-primary text-sm font-medium">
-                                            <i data-lucide="sparkles" class="w-4 h-4"></i> Daily Prompt
-                                        </div>
-                                        <h4 class="text-2xl font-bold text-white max-w-md leading-tight">"What's one small victory you celebrated today?"</h4>
-                                        <div class="flex items-center gap-3 mt-2">
-                                            <button class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-primary to-blue-600 text-white font-medium text-sm shadow-lg shadow-primary/25 hover:shadow-primary/40 transition-all transform hover:-translate-y-0.5">
-                                                Start Writing
-                                            </button>
-                                            <button class="px-4 py-2.5 rounded-xl bg-white/5 text-white font-medium text-sm hover:bg-white/10 transition-all">
-                                                Shuffle
-                                            </button>
-                                        </div>
-                                    </div>
+    <!-- Features Section -->
+    <section id="features" class="py-32 relative bg-light dark:bg-dark transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-20">
+                <h2 class="text-3xl md:text-5xl font-display font-bold mb-6 text-adaptive">Designed for clarity</h2>
+                <p class="text-muted-adaptive max-w-2xl mx-auto text-lg">Everything you need to maintain a healthy journaling habit, wrapped in a beautiful interface.</p>
+            </div>
 
-                                    <!-- Recent Entries Grid -->
-                                    <div class="grid grid-cols-2 gap-4">
-                                        <!-- Entry Card 1 -->
-                                        <div class="p-5 rounded-2xl bg-[#181B21] border border-white/5 hover:border-primary/30 hover:-translate-y-1 transition-all cursor-pointer group/card h-40 flex flex-col justify-between">
-                                            <div>
-                                                <div class="flex justify-between items-start mb-3">
-                                                    <span class="text-xs font-bold px-2 py-1 rounded-md bg-yellow-500/10 text-yellow-500 border border-yellow-500/10">High Energy</span>
-                                                    <i data-lucide="more-horizontal" class="w-4 h-4 text-gray-500 group-hover/card:text-white transition-colors"></i>
-                                                </div>
-                                                <h5 class="text-white font-semibold mb-1 group-hover/card:text-primary transition-colors">Productive morning workflow</h5>
-                                                <p class="text-xs text-gray-500 line-clamp-2">Finally cracked the code on my new project structure utilizing...</p>
-                                            </div>
-                                            <div class="flex items-center gap-2 text-xs text-gray-500">
-                                                <i data-lucide="clock" class="w-3 h-3"></i> 2 hours ago
-                                            </div>
-                                        </div>
-
-                                        <!-- Entry Card 2 -->
-                                        <div class="p-5 rounded-2xl bg-[#181B21] border border-white/5 hover:border-purple-500/30 hover:-translate-y-1 transition-all cursor-pointer group/card h-40 flex flex-col justify-between">
-                                            <div>
-                                                <div class="flex justify-between items-start mb-3">
-                                                    <span class="text-xs font-bold px-2 py-1 rounded-md bg-purple-500/10 text-purple-400 border border-purple-500/10">Reflection</span>
-                                                    <i data-lucide="more-horizontal" class="w-4 h-4 text-gray-500 group-hover/card:text-white transition-colors"></i>
-                                                </div>
-                                                <h5 class="text-white font-semibold mb-1 group-hover/card:text-purple-400 transition-colors">Deep thoughts on balance</h5>
-                                                <p class="text-xs text-gray-500 line-clamp-2">Sometimes taking a step back is the only way to move forward...</p>
-                                            </div>
-                                            <div class="flex items-center gap-2 text-xs text-gray-500">
-                                                <i data-lucide="clock" class="w-3 h-3"></i> Yesterday
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Right Column (Stats) -->
-                                <div class="space-y-4">
-                                    <!-- Mood Chart -->
-                                    <div class="p-5 rounded-2xl bg-[#181B21] border border-white/5 h-48 relative overflow-hidden group/stats">
-                                        <div class="flex justify-between items-center mb-6">
-                                            <h5 class="text-sm font-bold text-white">Mood Flow</h5>
-                                            <span class="text-xs text-primary bg-primary/10 px-2 py-1 rounded-md border border-primary/10">+12%</span>
-                                        </div>
-                                        
-                                        <!-- Simulated Chart -->
-                                        <div class="absolute bottom-0 left-0 right-0 h-24 flex items-end px-4 gap-2">
-                                            <div class="w-1/6 bg-white/5 rounded-t-sm h-[30%] group-hover/stats:h-[40%] transition-all duration-500"></div>
-                                            <div class="w-1/6 bg-white/5 rounded-t-sm h-[50%] group-hover/stats:h-[60%] transition-all duration-500 delay-75"></div>
-                                            <div class="w-1/6 bg-white/10 rounded-t-sm h-[40%] group-hover/stats:h-[45%] transition-all duration-500 delay-100"></div>
-                                            <div class="w-1/6 bg-gradient-to-t from-primary/50 to-primary rounded-t-sm h-[80%] shadow-[0_0_15px_rgba(59,130,246,0.5)] group-hover/stats:h-[90%] transition-all duration-500 delay-150"></div>
-                                            <div class="w-1/6 bg-white/10 rounded-t-sm h-[60%] group-hover/stats:h-[70%] transition-all duration-500 delay-200"></div>
-                                            <div class="w-1/6 bg-white/5 rounded-t-sm h-[45%] group-hover/stats:h-[55%] transition-all duration-500 delay-300"></div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Mini Widgets -->
-                                    <div class="h-40 rounded-2xl bg-gradient-to-br from-purple-500/10 to-transparent border border-white/5 p-5 flex flex-col justify-center items-center text-center relative overflow-hidden">
-                                        <div class="absolute top-0 right-0 w-20 h-20 bg-purple-500/20 rounded-full blur-2xl"></div>
-                                        <div class="w-12 h-12 rounded-full bg-purple-500/20 text-purple-300 flex items-center justify-center mb-3 text-xl">🔥</div>
-                                        <div class="text-3xl font-bold text-white mb-1">14 Days</div>
-                                        <p class="text-xs text-purple-300 font-medium">Ordering Streak</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="p-8 rounded-2xl feature-card border shadow-xl shadow-gray-200/50 dark:shadow-none hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 group">
+                    <div class="w-14 h-14 rounded-xl bg-indigo-100 dark:bg-indigo-500/20 flex items-center justify-center mb-6 text-indigo-600 dark:text-indigo-400 group-hover:scale-110 transition-transform duration-300">
+                        <i data-lucide="book-open" class="w-7 h-7"></i>
                     </div>
+                    <h3 class="text-xl font-bold mb-3 font-display text-adaptive">Daily Entries</h3>
+                    <p class="text-muted-adaptive leading-relaxed">Write freely with a distraction-free editor. Support for rich text, moods, and categorization.</p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="p-8 rounded-2xl feature-card border shadow-xl shadow-gray-200/50 dark:shadow-none hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 group">
+                    <div class="w-14 h-14 rounded-xl bg-pink-100 dark:bg-pink-500/20 flex items-center justify-center mb-6 text-pink-600 dark:text-pink-400 group-hover:scale-110 transition-transform duration-300">
+                        <i data-lucide="sparkles" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 font-display text-adaptive">Smart Prompts</h3>
+                    <p class="text-muted-adaptive leading-relaxed">Stuck? Get personalized writing prompts to help you reflect deeply and express yourself.</p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="p-8 rounded-2xl feature-card border shadow-xl shadow-gray-200/50 dark:shadow-none hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 group">
+                    <div class="w-14 h-14 rounded-xl bg-blue-100 dark:bg-blue-500/20 flex items-center justify-center mb-6 text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform duration-300">
+                        <i data-lucide="bar-chart-2" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 font-display text-adaptive">Mood Tracking</h3>
+                    <p class="text-muted-adaptive leading-relaxed">Visualize your emotional journey over time with beautiful, interactive analytics charts.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Features Section -->
-    <section id="features" class="py-32 relative bg-dark/50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-20 animate-on-scroll">
-                <h2 class="text-3xl md:text-5xl font-display font-bold mb-6">Designed for clarity</h2>
-                <p class="text-gray-400 max-w-2xl mx-auto text-lg">Everything you need to maintain a healthy journaling habit, wrapped in a beautiful interface.</p>
+    <!-- Science of Journaling Section -->
+    <section id="science" class="py-24 bg-dark relative overflow-hidden">
+        <!-- Background Elements -->
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+            <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/5 rounded-full blur-[120px]"></div>
+            <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-600/5 rounded-full blur-[120px]"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16">
+                <span class="inline-block px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-primary text-sm font-semibold mb-4">
+                    Backed by Science
+                </span>
+                <h2 class="text-3xl md:text-5xl font-display font-bold mb-6 text-adaptive">More than just writing</h2>
+                <p class="text-muted-adaptive max-w-2xl mx-auto text-lg leading-relaxed">
+                    Decades of psychological research show that expressive writing profoundly impacts your mental and physical well-being.
+                </p>
             </div>
 
             <div class="grid md:grid-cols-3 gap-8">
-                <!-- Feature 1 -->
-                <div class="p-8 rounded-2xl bg-light/5 border border-light/10 hover:border-primary/50 transition-all hover:bg-light/10 group animate-on-scroll">
-                    <div class="w-14 h-14 rounded-xl bg-primary/20 flex items-center justify-center mb-6 text-primary group-hover:scale-110 transition-transform">
-                        <i data-lucide="book-open" class="w-7 h-7"></i>
+                <!-- Research Card 1 -->
+                <div class="p-8 rounded-3xl research-card border border-white/5 hover:border-primary/30 transition-all group">
+                    <div class="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center mb-6 text-primary group-hover:scale-110 transition-transform">
+                        <i data-lucide="brain-circuit" class="w-6 h-6"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-3 font-display">Daily Entries</h3>
-                    <p class="text-gray-400 leading-relaxed">Write freely with a distraction-free editor. Support for rich text, moods, and categorization.</p>
+                    <h3 class="text-xl font-bold text-adaptive mb-3">Emotional Regulation</h3>
+                    <p class="text-muted-adaptive mb-6 leading-relaxed">
+                        "Putting feelings into words reduces activity in the amygdala, the brain's emotional center, effectively calming the nervous system."
+                    </p>
+                    <div class="text-xs text-gray-500 font-medium uppercase tracking-wider">
+                        Lieberman et al. (2007)
+                    </div>
                 </div>
 
-                <!-- Feature 2 -->
-                <div class="p-8 rounded-2xl bg-light/5 border border-light/10 hover:border-secondary/50 transition-all hover:bg-light/10 group animate-on-scroll animation-delay-200">
-                    <div class="w-14 h-14 rounded-xl bg-secondary/20 flex items-center justify-center mb-6 text-secondary group-hover:scale-110 transition-transform">
-                        <i data-lucide="sparkles" class="w-7 h-7"></i>
+                <!-- Research Card 2 -->
+                <div class="p-8 rounded-3xl research-card border border-white/5 hover:border-blue-500/30 transition-all group">
+                    <div class="w-12 h-12 rounded-2xl bg-blue-500/10 flex items-center justify-center mb-6 text-blue-400 group-hover:scale-110 transition-transform">
+                        <i data-lucide="zap" class="w-6 h-6"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-3 font-display">Smart Prompts</h3>
-                    <p class="text-gray-400 leading-relaxed">Stuck? Get personalized writing prompts to help you reflect deeply and express yourself.</p>
+                    <h3 class="text-xl font-bold text-adaptive mb-3">Boosted Memory</h3>
+                    <p class="text-muted-adaptive mb-6 leading-relaxed">
+                        "Expressive writing frees up cognitive resources, leading to verifiable improvements in working memory capacity and focus."
+                    </p>
+                    <div class="text-xs text-gray-500 font-medium uppercase tracking-wider">
+                        Klein & Boals (2001)
+                    </div>
                 </div>
 
-                <!-- Feature 3 -->
-                <div class="p-8 rounded-2xl bg-light/5 border border-light/10 hover:border-blue-500/50 transition-all hover:bg-light/10 group animate-on-scroll animation-delay-400">
-                    <div class="w-14 h-14 rounded-xl bg-blue-500/20 flex items-center justify-center mb-6 text-blue-400 group-hover:scale-110 transition-transform">
-                        <i data-lucide="bar-chart-2" class="w-7 h-7"></i>
+                <!-- Research Card 3 -->
+                <div class="p-8 rounded-3xl research-card border border-white/5 hover:border-purple-500/30 transition-all group">
+                    <div class="w-12 h-12 rounded-2xl bg-purple-500/10 flex items-center justify-center mb-6 text-purple-400 group-hover:scale-110 transition-transform">
+                        <i data-lucide="shield-check" class="w-6 h-6"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-3 font-display">Mood Tracking</h3>
-                    <p class="text-gray-400 leading-relaxed">Visualize your emotional journey over time with beautiful, interactive analytics charts.</p>
+                    <h3 class="text-xl font-bold text-adaptive mb-3">Reduced Stress</h3>
+                    <p class="text-muted-adaptive mb-6 leading-relaxed">
+                        "Regular journaling significantly lowers cortisol levels and has been linked to stronger immune system functioning."
+                    </p>
+                    <div class="text-xs text-gray-500 font-medium uppercase tracking-wider">
+                        Pennebaker (1997)
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="py-12 border-t border-light/10 bg-dark relative z-10">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
-            <div class="text-2xl font-display font-bold text-white">MindLog</div>
-            <p class="text-gray-500 text-sm">© 2026 MindLog. All rights reserved. Built with ❤️.</p>
-            <div class="flex space-x-6">
-                <a href="#" class="text-gray-400 hover:text-white transition-colors"><i data-lucide="twitter" class="w-5 h-5"></i></a>
-                <a href="#" class="text-gray-400 hover:text-white transition-colors"><i data-lucide="github" class="w-5 h-5"></i></a>
+    <footer class="relative z-10 pt-20 pb-10 border-t border-gray-200 dark:border-gray-800 transition-colors duration-300">
+        <!-- Background Glow (Dark Mode Only) -->
+        <div class="absolute inset-0 overflow-hidden pointer-events-none opacity-0 dark:opacity-100 transition-opacity duration-300">
+             <div class="absolute -top-[50%] -left-[20%] w-[70%] h-[70%] bg-primary/5 rounded-full blur-[120px]"></div>
+             <div class="absolute -bottom-[50%] -right-[20%] w-[70%] h-[70%] bg-blue-600/5 rounded-full blur-[120px]"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8 mb-16">
+                <!-- Brand Content (Col Span 4) -->
+                <div class="lg:col-span-4 space-y-6">
+                    <a href="#" class="flex items-center gap-2 text-2xl font-display font-bold text-adaptive">
+                        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white shadow-lg shadow-primary/20">
+                            <i data-lucide="pen-tool" class="w-5 h-5"></i>
+                        </div>
+                        MindLog
+                    </a>
+                    <p class="text-muted-adaptive text-sm leading-relaxed max-w-sm">
+                        Your private sanctuary for self-reflection. Track your moods, identify patterns, and grow personally.
+                    </p>
+                    <div class="flex space-x-3 pt-2">
+                        <a href="#" class="w-10 h-10 rounded-full bg-slate-200 dark:bg-white/10 border border-transparent dark:border-white/5 flex items-center justify-center text-gray-600 dark:text-gray-400 hover:text-white hover:bg-primary hover:border-primary transition-all duration-300 group">
+                            <i data-lucide="twitter" class="w-5 h-5 group-hover:scale-110 transition-transform"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-slate-200 dark:bg-white/10 border border-transparent dark:border-white/5 flex items-center justify-center text-gray-600 dark:text-gray-400 hover:text-white hover:bg-primary hover:border-primary transition-all duration-300 group">
+                            <i data-lucide="github" class="w-5 h-5 group-hover:scale-110 transition-transform"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-slate-200 dark:bg-white/10 border border-transparent dark:border-white/5 flex items-center justify-center text-gray-600 dark:text-gray-400 hover:text-white hover:bg-primary hover:border-primary transition-all duration-300 group">
+                            <i data-lucide="linkedin" class="w-5 h-5 group-hover:scale-110 transition-transform"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Product Links (Col Span 2) -->
+                <div class="lg:col-span-2 lg:col-start-6">
+                    <h3 class="font-bold text-adaptive mb-6 text-sm uppercase tracking-wider">Product</h3>
+                    <ul class="space-y-4">
+                        <li><a href="#features" class="text-muted-adaptive text-sm hover:text-primary transition-colors flex items-center gap-2 group"><span class="w-1.5 h-1.5 rounded-full bg-primary/0 group-hover:bg-primary transition-colors"></span>Features</a></li>
+                        <li><a href="#preview" class="text-muted-adaptive text-sm hover:text-primary transition-colors flex items-center gap-2 group"><span class="w-1.5 h-1.5 rounded-full bg-primary/0 group-hover:bg-primary transition-colors"></span>Preview</a></li>
+                        <li><a href="#science" class="text-muted-adaptive text-sm hover:text-primary transition-colors flex items-center gap-2 group"><span class="w-1.5 h-1.5 rounded-full bg-primary/0 group-hover:bg-primary transition-colors"></span>Methodology</a></li>
+                        <li><a href="#" class="text-muted-adaptive text-sm hover:text-primary transition-colors flex items-center gap-2 group"><span class="w-1.5 h-1.5 rounded-full bg-primary/0 group-hover:bg-primary transition-colors"></span>Pricing</a></li>
+                    </ul>
+                </div>
+
+                <!-- Resources Links (Col Span 2) -->
+                <div class="lg:col-span-2">
+                    <h3 class="font-bold text-adaptive mb-6 text-sm uppercase tracking-wider">Resources</h3>
+                    <ul class="space-y-4">
+                        <li><a href="#" class="text-muted-adaptive text-sm hover:text-primary transition-colors flex items-center gap-2 group"><span class="w-1.5 h-1.5 rounded-full bg-primary/0 group-hover:bg-primary transition-colors"></span>Community</a></li>
+                        <li><a href="#" class="text-muted-adaptive text-sm hover:text-primary transition-colors flex items-center gap-2 group"><span class="w-1.5 h-1.5 rounded-full bg-primary/0 group-hover:bg-primary transition-colors"></span>Help Center</a></li>
+                        <li><a href="#" class="text-muted-adaptive text-sm hover:text-primary transition-colors flex items-center gap-2 group"><span class="w-1.5 h-1.5 rounded-full bg-primary/0 group-hover:bg-primary transition-colors"></span>Blog</a></li>
+                    </ul>
+                </div>
+
+                <!-- Newsletter (Col Span 4) -->
+                <div class="lg:col-span-3">
+                    <h3 class="font-bold text-adaptive mb-6 text-sm uppercase tracking-wider">Stay Updated</h3>
+                    <p class="text-muted-adaptive text-sm mb-4 leading-relaxed">
+                        Join 10,000+ mindful journalists. No spam, just insights.
+                    </p>
+                    <form class="space-y-3" onsubmit="event.preventDefault();">
+                        <div class="relative group">
+                            <input type="email" placeholder="Enter your email" 
+                                class="w-full pl-4 pr-12 py-3.5 rounded-xl bg-slate-100 dark:bg-[#181B21] border border-slate-200 dark:border-gray-800 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all text-sm text-adaptive placeholder:text-gray-400 dark:placeholder:text-gray-600 shadow-inner">
+                            <button type="submit" class="absolute right-2 top-1.5 p-2 rounded-lg bg-primary text-white hover:bg-primary/90 transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5">
+                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                        <p class="text-xs text-muted-adaptive">
+                            By subscribing, you agree to our <a href="#" class="underline hover:text-primary">Policy</a>.
+                        </p>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Bottom Bar -->
+            <div class="pt-8 border-t border-gray-200 dark:border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-muted-adaptive text-sm text-center md:text-left">
+                    © 2026 MindLog. Crafted with care.
+                </p>
+                <div class="flex flex-wrap justify-center gap-x-8 gap-y-2 text-sm">
+                    <a href="#" class="text-muted-adaptive hover:text-primary transition-colors mr-6">Privacy Policy</a>
+                    <a href="#" class="text-muted-adaptive hover:text-primary transition-colors mr-6">Terms of Service</a>
+                    <a href="#" class="text-muted-adaptive hover:text-primary transition-colors">Cookie Settings</a>
+                </div>
             </div>
         </div>
     </footer>
@@ -267,9 +346,11 @@
         // Apply saved theme on page load
         if (savedTheme === 'dark') {
             document.documentElement.setAttribute('data-theme', 'dark');
+            document.documentElement.classList.add('dark');
             if (themeIcon) themeIcon.textContent = '🌙';
         } else {
             document.documentElement.setAttribute('data-theme', 'light');
+            document.documentElement.classList.remove('dark');
             if (themeIcon) themeIcon.textContent = '☀️';
         }
 
@@ -279,10 +360,16 @@
             themeToggleBtn.addEventListener('click', function() {
                 const currentTheme = document.documentElement.getAttribute('data-theme');
                 const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                
                 document.documentElement.setAttribute('data-theme', newTheme);
                 localStorage.setItem('theme', newTheme);
-                if (themeIcon) {
-                    themeIcon.textContent = newTheme === 'dark' ? '🌙' : '☀️';
+                
+                if (newTheme === 'dark') {
+                    document.documentElement.classList.add('dark');
+                    if (themeIcon) themeIcon.textContent = '🌙';
+                } else {
+                    document.documentElement.classList.remove('dark');
+                    if (themeIcon) themeIcon.textContent = '☀️';
                 }
             });
         }

@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Check Auth & Admin Role
     if (!api.isAuthenticated()) {
         window.location.href = '../auth/login.html';
         return;
@@ -14,7 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initTheme();
     initMobileMenu();
     
-    // Page Router
     const path = window.location.pathname;
     if (path.includes('dashboard.html')) {
         loadDashboardStats();
@@ -23,14 +21,12 @@ document.addEventListener('DOMContentLoaded', () => {
         initPromptModal();
     }
     
-    // Logout Handler
     document.getElementById('logoutBtn')?.addEventListener('click', () => {
         api.logout();
         window.location.href = '../auth/login.html';
     });
 });
 
-// --- Dashboard Stats ---
 async function loadDashboardStats() {
     const container = document.getElementById('statsContainer');
     if (!container) return;
@@ -69,7 +65,6 @@ function createStatCard(label, value, icon, colorClass) {
     `;
 }
 
-// --- Prompts Management ---
 let allPrompts = [];
 const CATEGORIES = [
     { label: 'Self-Reflection', value: 'reflection' },
@@ -132,7 +127,6 @@ function renderPromptsTable(prompts) {
     lucide.createIcons();
 }
 
-// --- Modal & CRUD Logic ---
 function initPromptModal() {
     const modal = document.getElementById('promptModal');
     const content = document.getElementById('promptModalContent');
@@ -141,7 +135,6 @@ function initPromptModal() {
     const form = document.getElementById('promptForm');
     const catSelect = document.getElementById('promptCategory');
 
-    // Populate Categories
     catSelect.innerHTML = CATEGORIES.map(c => `<option value="${c.value}">${c.label}</option>`).join('');
 
     function openModal(isEdit = false) {
@@ -160,12 +153,10 @@ function initPromptModal() {
     addBtn.addEventListener('click', () => openModal(false));
     cancelBtn.addEventListener('click', closeModal);
     
-    // Close on outside click
     modal.addEventListener('click', (e) => {
         if (e.target === modal) closeModal();
     });
 
-    // Form Submit
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
         const id = document.getElementById('promptId').value;
@@ -192,7 +183,6 @@ function initPromptModal() {
         }
     });
 
-    // Expose edit/delete globally
     window.editPrompt = (id) => {
         const p = allPrompts.find(x => x._id === id);
         if (!p) return;
@@ -217,7 +207,6 @@ function initPromptModal() {
     };
 }
 
-// --- Shared Helpers ---
 function initTheme() {
     const themeToggle = document.getElementById('themeToggle');
     const themeIcon = document.getElementById('themeIcon');
@@ -225,14 +214,28 @@ function initTheme() {
 
     const savedTheme = localStorage.getItem('theme') || 'light';
     html.setAttribute('data-theme', savedTheme);
-    themeIcon.textContent = savedTheme === 'dark' ? '🌙' : '☀️';
+    if (savedTheme === 'dark') {
+        html.classList.add('dark');
+        themeIcon.textContent = '🌙';
+    } else {
+        html.classList.remove('dark');
+        themeIcon.textContent = '☀️';
+    }
 
     themeToggle?.addEventListener('click', () => {
         const currentTheme = html.getAttribute('data-theme');
         const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        
         html.setAttribute('data-theme', newTheme);
         localStorage.setItem('theme', newTheme);
-        themeIcon.textContent = newTheme === 'dark' ? '🌙' : '☀️';
+        
+        if (newTheme === 'dark') {
+            html.classList.add('dark');
+            themeIcon.textContent = '🌙';
+        } else {
+            html.classList.remove('dark');
+            themeIcon.textContent = '☀️';
+        }
     });
 }
 function initMobileMenu() {
