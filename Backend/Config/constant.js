@@ -21,7 +21,8 @@ const PROMPT_CATEGORIES = {
     CREATIVITY: 'creativity',
     MINDFULNESS: 'mindfulness',
     RELATIONSHIPS: 'relationships',
-    PERSONAL_GROWTH: 'personal_growth'
+    PERSONAL_GROWTH: 'personal_growth',
+    CHALLENGES: 'challenges'
 };
 
 const PROMPT_CATEGORIES_VALUES = Object.values(PROMPT_CATEGORIES);

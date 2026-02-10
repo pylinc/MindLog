@@ -15,6 +15,12 @@ const journalSchema = new mongoose.Schema({
     required: [true, 'User ID is required'],
     index: true
   },
+  categoryId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Category',
+    required: false,
+    index: true
+  },
   title: {
     type: String,
     required: [true, 'Title is required'],
@@ -129,6 +135,7 @@ journalSchema.index({ userId: 1, createdAt: -1 });
 journalSchema.index({ userId: 1, tags: 1 });
 journalSchema.index({ userId: 1, mood: 1 });
 journalSchema.index({ userId: 1, isFavorite: 1 });
+journalSchema.index({ userId: 1, categoryId: 1 });
 
 // Text index for search functionality
 journalSchema.index({ title: 'text', content: 'text' });
@@ -161,6 +168,13 @@ journalSchema.statics.findByUser = function(userId, options = {}) {
   if (options.isFavorite !== undefined) {
     query.where('isFavorite').equals(options.isFavorite);
   }
+  
+  if (options.categoryId) {
+    query.where('categoryId').equals(options.categoryId);
+  }
+  
+  // Populate category information
+  query.populate('categoryId', 'name color icon');
   
   return query.sort({ createdAt: -1 });
 };

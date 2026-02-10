@@ -10,6 +10,7 @@ const {
     favoriteJournal,
     moodStatics,
     journalAnalytics,
+    getCalendarData,
     searchJournals
 } = require('../Controller/journalController');
 
@@ -30,6 +31,7 @@ router.get('/search', authMiddleware, validateSearch, searchJournals);
 // Statistics routes
 router.get('/stats/mood', authMiddleware, moodStatics);
 router.get('/stats/analytics', authMiddleware, journalAnalytics);
+router.get('/stats/calendar', authMiddleware, getCalendarData);
 
 // CRUD routes with validation
 router.get('/:id', authMiddleware, validateObjectId, singleJournal);

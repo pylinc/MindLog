@@ -12,6 +12,7 @@ exports.getAll = async (req, res) => {
             tags,
             search,
             isFavorite,
+            categoryId,
             startDate,
             endDate,
             sort
@@ -35,6 +36,10 @@ exports.getAll = async (req, res) => {
 
         if (isFavorite !== undefined) {
             query.isFavorite = isFavorite === 'true';
+        }
+
+        if (categoryId) {
+            query.categoryId = categoryId;
         }
 
         if (startDate || endDate) {
@@ -62,6 +67,7 @@ exports.getAll = async (req, res) => {
         // Execute query and count concurrently
         const [journals, total] = await Promise.all([
             Journal.find(query)
+                .populate('categoryId', 'name color icon')
                 .sort(sortOption)
                 .skip(skip)
                 .limit(limitNum)
@@ -133,7 +139,7 @@ exports.singleJournal = async (req, res) => {
 };
 exports.createJournal = async (req, res) => {
     try {
-        const { title, content, mood, tags, isFavorite, isPrivate, location, weather, attachments } = req.body;
+        const { title, content, mood, tags, isFavorite, isPrivate, location, weather, attachments, categoryId } = req.body;
         const userId = req.user;
 
         if (!title || !content) {
@@ -176,6 +182,7 @@ exports.createJournal = async (req, res) => {
 
         const journal = await Journal.create({
             userId,
+            categoryId: categoryId || undefined,
             title,
             content,
             mood: mood ? mood.toLowerCase() : undefined,
@@ -205,7 +212,7 @@ exports.createJournal = async (req, res) => {
 exports.updateJournal = async (req, res) => {
     try {
         const { id } = req.params; // Fix: Extract id from params
-        const { title, content, mood, tags, isFavorite, isPrivate, location, weather, attachments } = req.body;
+        const { title, content, mood, tags, isFavorite, isPrivate, location, weather, attachments, categoryId } = req.body;
         
         if (!title || !content) {
             return res.status(HTTP_STATUS.BAD_REQUEST).json({
@@ -231,6 +238,7 @@ exports.updateJournal = async (req, res) => {
         journal.content = content;
         if (mood) journal.mood = mood.toLowerCase();
         if (tags) journal.tags = tags;
+        if (categoryId !== undefined) journal.categoryId = categoryId || null;
         if (isFavorite !== undefined) journal.isFavorite = isFavorite;
         if (isPrivate !== undefined) journal.isPrivate = isPrivate;
         
@@ -473,6 +481,51 @@ exports.searchJournals = async(req,res)=>{
         });
     }catch(error){
         console.error("Error while searching journals: ", error);
+        return res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
+            success: false,
+            message: error.message
+        });
+    }
+};
+
+exports.getCalendarData = async (req, res) => {
+    try {
+        const userId = req.user;
+        
+        // Aggregate to get unique dates with entries and their mood
+        const calendarData = await Journal.aggregate([
+            { 
+                $match: { 
+                    userId: new mongoose.Types.ObjectId(userId) 
+                } 
+            },
+            { $sort: { createdAt: 1 } }, // Sort to ensure we get the latest mood
+            {
+                $project: {
+                    // Convert date to YYYY-MM-DD string
+                    date: { $dateToString: { format: "%Y-%m-%d", date: "$createdAt" } },
+                    mood: 1
+                }
+            },
+            {
+                $group: {
+                    _id: "$date",
+                    mood: { $last: "$mood" }, // Get the mood of the last entry for the day
+                    count: { $sum: 1 }
+                }
+            },
+            { $sort: { _id: 1 } }
+        ]);
+
+        return res.status(HTTP_STATUS.OK).json({
+            success: true,
+            data: calendarData.map(item => ({
+                date: item._id,
+                mood: item.mood
+            }))
+        });
+    } catch (error) {
+        console.error("Error while getting calendar data: ", error);
         return res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
             success: false,
             message: error.message

@@ -119,6 +119,10 @@ app.use("/api/journal", journalRoutes);
 app.use("/api/category", categoryRoutes);
 app.use("/api/prompt", promptRoutes);
 
+// Admin Routes
+const adminRoutes = require('./Routes/adminRoutes');
+app.use("/api/admin", adminRoutes);
+
 // Health Check Endpoint
 app.get('/health', (req, res) => {
     res.status(200).json({

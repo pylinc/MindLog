@@ -3,10 +3,10 @@ const Category = require('../Models/Category');
 
 exports.getAll = async(req,res)=>{
     try{
-        const userId = req.user;
+        const userId = req.userId;
     
         const category = await Category.findByUser(userId);
-
+        
         if(!category || category.length === 0){
             return res.status(HTTP_STATUS.NOT_FOUND).json({
                 success:false,
@@ -19,7 +19,6 @@ exports.getAll = async(req,res)=>{
             data:category,
         })
     }catch(error){
-        console.error(error);
         return res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
             success:false,
             message:ERROR_MESSAGES.INTERNAL_SERVER_ERROR,
@@ -30,7 +29,7 @@ exports.getAll = async(req,res)=>{
 
 exports.getSingle = async(req,res)=>{
     try{
-        const userId = req.user;
+        const userId = req.userId;
         const categoryId = req.params.id;
 
         const exist = await Category.findById(categoryId);
@@ -65,7 +64,7 @@ exports.getSingle = async(req,res)=>{
 
 exports.createCategory = async(req,res)=>{
     try{
-        const userId = req.user;
+        const userId = req.userId;
         const{name,color,icon,description} = req.body;
 
         // Validate category name
@@ -129,7 +128,7 @@ exports.createCategory = async(req,res)=>{
 
 exports.updateCategory = async(req,res)=>{
     try{
-        const userId = req.user;
+        const userId = req.userId;
         const categoryId = req.params.id;
         const {name, color, icon, description} = req.body;
 
@@ -213,7 +212,7 @@ exports.updateCategory = async(req,res)=>{
 
 exports.deleteCategory = async(req,res)=>{
     try{
-        const userId = req.user;
+        const userId = req.userId;
         const categoryId = req.params.id;
 
         // Find category by ID

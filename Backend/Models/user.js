@@ -69,6 +69,11 @@ const userSchema = new mongoose.Schema({
             match: [/^([01]\d|2[0-3]):([0-5]\d)$/, 'Reminder time must be in HH:MM format (e.g., 09:00)']
         }
     },
+    role: {
+        type: String,
+        enum: ['user', 'admin'],
+        default: 'user'
+    },
     isActive:{
         type:Boolean,
         default:true,

@@ -21,7 +21,8 @@ exports.getAllPrompts = async(req,res)=>{
 
 exports.getRandomPrompt = async(req,res)=>{
     try{
-        const prompt = await JournalPrompt.getRandomPrompt();
+        const { category, exclude } = req.query;
+        const prompt = await JournalPrompt.getRandomPrompt(category, exclude);
 
         return res.status(HTTP_STATUS.OK).json({
             success:true,

@@ -27,11 +27,15 @@ const journalPromptsSchema = new mongoose.Schema({
 journalPromptsSchema.index({ category: 1 });
 journalPromptsSchema.index({ isActive: 1 });
 
-journalPromptsSchema.statics.getRandomPrompt = async function (category) {
+journalPromptsSchema.statics.getRandomPrompt = async function (category, excludeId) {
     const query = { isActive: true };
 
     if (category) {
         query.category = category;
+    }
+    
+    if (excludeId && mongoose.Types.ObjectId.isValid(excludeId)) {
+        query._id = { $ne: new mongoose.Types.ObjectId(excludeId) };
     }
 
     const prompts = await this.aggregate([
