@@ -29,7 +29,7 @@ const userSchema = new mongoose.Schema({
         required:[true,'Password is required'],
         minlength:[VALIDATION.PASSWORD.MIN_LENGTH,`Password should contain minimum ${VALIDATION.PASSWORD.MIN_LENGTH} character`],
         maxlength:[VALIDATION.PASSWORD.MAX_LENGTH,`Password cannot exceed ${VALIDATION.PASSWORD.MAX_LENGTH} characters`],
-        select:false, // do not include password in quaries by default
+        select:false,
     },
     profile:{
         firstName:{
@@ -49,7 +49,6 @@ const userSchema = new mongoose.Schema({
         },
         avatar:{
             type:String,
-            // required:true,
         }
     },
     preferences:{

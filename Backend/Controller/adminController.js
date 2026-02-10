@@ -5,7 +5,6 @@ const { HTTP_STATUS, ERROR_MESSAGES } = require('../Config/constant');
 
 exports.getDashboardStats = async (req, res) => {
     try {
-        // Parallel execution for performance
         const [totalUsers, totalEntries, totalPrompts, activeUsers] = await Promise.all([
             User.countDocuments(),
             Journal.countDocuments(),
