@@ -102,6 +102,9 @@
                 </p>
             </div>
             
+            <!-- Status Message Container -->
+            <div id="statusMessage" class="hidden mt-4 p-3 bg-blue-500/10 border border-blue-500/20 rounded-lg text-blue-400 text-sm text-center"></div>
+
              <!-- Error Message Container -->
             <div id="errorMessage" class="hidden mt-4 p-3 bg-red-500/10 border border-red-500/20 rounded-lg text-red-400 text-sm text-center"></div>
         </div>
@@ -113,7 +116,6 @@
     <script>
         lucide.createIcons();
         
-        // Theme toggle functionality
         // Theme toggle functionality
         const savedTheme = localStorage.getItem('theme') || 'light';
         const themeIcon = document.getElementById('themeIcon');
@@ -145,12 +147,39 @@
         const signupForm = document.getElementById('signupForm');
         const submitBtn = signupForm.querySelector('button[type="submit"]');
         const originalBtnText = submitBtn.textContent;
+        let isSubmitting = false;
+
+        // Status message helper
+        const showStatus = (message) => {
+            const el = document.getElementById('statusMessage');
+            if (el) {
+                el.textContent = message;
+                el.classList.remove('hidden');
+            }
+        };
+
+        const hideStatus = () => {
+            const el = document.getElementById('statusMessage');
+            if (el) {
+                el.classList.add('hidden');
+                el.textContent = '';
+            }
+        };
 
         signupForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             
+            if (isSubmitting) return;
+            isSubmitting = true;
+
             ui.hideError('errorMessage');
+            hideStatus();
             ui.setLoading('submitBtn', true, originalBtnText);
+
+            // Cold start notification timer
+            const slowRequestTimer = setTimeout(() => {
+                showStatus('Server is waking up from sleep... This might take up to a minute.');
+            }, 3000);
 
             const firstName = document.getElementById('firstName').value;
             const lastName = document.getElementById('lastName').value || '';
@@ -161,18 +190,26 @@
             try {
                 const response = await api.register(firstName, lastName, username, email, password);
                 
+                clearTimeout(slowRequestTimer);
+                hideStatus();
+
                 if (response.success) {
-                    window.location.href = 'login.html';
+                    showStatus('Account created! Redirecting to login...');
+                    setTimeout(() => {
+                        window.location.href = 'login.html';
+                    }, 1000);
                 } else {
-                    ui.showError('errorMessage', response.message);
+                    throw new Error(response.message);
                 }
             } catch (error) {
+                clearTimeout(slowRequestTimer);
+                hideStatus();
                 console.error(error);
                 ui.showError('errorMessage', error.message || 'Failed to connect to server');
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.textContent = originalBtnText;
-                submitBtn.classList.remove('opacity-70', 'cursor-not-allowed');
+                
+                // Reset state only on error
+                ui.setLoading('submitBtn', false, originalBtnText);
+                isSubmitting = false;
             }
         });
     </script>

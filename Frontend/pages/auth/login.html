@@ -69,6 +69,9 @@
                 </p>
             </div>
             
+            <!-- Status Message Container -->
+            <div id="statusMessage" class="hidden mt-4 p-3 bg-blue-500/10 border border-blue-500/20 rounded-lg text-blue-400 text-sm text-center"></div>
+
             <!-- Error Message Container -->
             <div id="errorMessage" class="hidden mt-4 p-3 bg-red-500/10 border border-red-500/20 rounded-lg text-red-400 text-sm text-center"></div>
         </div>
@@ -80,7 +83,6 @@
     <script>
         lucide.createIcons();
         
-        // Theme toggle functionality
         // Theme toggle functionality
         const savedTheme = localStorage.getItem('theme') || 'light';
         const themeIcon = document.getElementById('themeIcon');
@@ -112,13 +114,42 @@
         const loginForm = document.getElementById('loginForm');
         const submitBtn = loginForm.querySelector('button[type="submit"]');
         const originalBtnText = submitBtn.textContent;
+        let isSubmitting = false;
+
+        // Status message helper
+        const showStatus = (message) => {
+            const el = document.getElementById('statusMessage');
+            if (el) {
+                el.textContent = message;
+                el.classList.remove('hidden');
+            }
+        };
+
+        const hideStatus = () => {
+            const el = document.getElementById('statusMessage');
+            if (el) {
+                el.classList.add('hidden');
+                el.textContent = '';
+            }
+        };
 
         loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             
-            // Clear previous errors
+            if (isSubmitting) return; // Prevent duplicate submissions
+            isSubmitting = true;
+
+            // Clear previous errors and status
             ui.hideError('errorMessage');
-            ui.setLoading('submitBtn', true, originalBtnText); // Note: ID needs to be added to button
+            hideStatus();
+            
+            // Set loading state
+            ui.setLoading('submitBtn', true, originalBtnText);
+            
+            // Cold start notification timer
+            const slowRequestTimer = setTimeout(() => {
+                showStatus('Server is waking up from sleep... This might take up to a minute.');
+            }, 3000); // Show message if request takes > 3s
 
             const identifier = document.getElementById('identifier').value;
             const password = document.getElementById('password').value;
@@ -126,30 +157,36 @@
             try {
                 const response = await api.login(identifier, password);
                 
+                clearTimeout(slowRequestTimer); // Clear timer on response
+                hideStatus();
+
                 if (response.success) {
                     // Store auth data
                     localStorage.setItem('token', response.token);
                     localStorage.setItem('user', JSON.stringify(response.User));
                     
+                    showStatus('Login successful! Redirecting...');
+                    
                     // Redirect based on role
-                    if (response.User.role === 'admin') {
-                        window.location.href = '../admin/dashboard.html';
-                    } else {
-                        window.location.href = '../app/dashboard.html';
-                    } 
+                    setTimeout(() => {
+                        if (response.User.role === 'admin') {
+                            window.location.href = '../admin/dashboard.html';
+                        } else {
+                            window.location.href = '../app/dashboard.html';
+                        }
+                    }, 500); 
                 } else {
-                    ui.showError('errorMessage', response.message);
+                    throw new Error(response.message);
                 }
             } catch (error) {
+                clearTimeout(slowRequestTimer);
+                hideStatus();
                 console.error(error);
                 ui.showError('errorMessage', error.message || 'Failed to connect to server');
-            } finally {
-                // Manually reset button state since we don't have an ID on it yet in this snippet context, 
-                // but checking the loop, I should add the ID to the button first or select it safely.
-                // Let's rely on the ui helper if I add the ID to the HTML below.
-                submitBtn.disabled = false;
-                submitBtn.textContent = originalBtnText;
-                submitBtn.classList.remove('opacity-70', 'cursor-not-allowed');
+                
+                // Reset state only on error
+                ui.setLoading('submitBtn', false, originalBtnText);
+                isSubmitting = false;
             }
         });
     </script>
