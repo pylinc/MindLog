@@ -1,0 +1,123 @@
+/* Preloader Wrapper - Default Light Mode */
+#preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Light Mode Glass Background */
+    background-color: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    transition: opacity 0.8s ease-out, visibility 0.8s ease-out;
+}
+
+/* Dark Mode Override */
+html.dark #preloader {
+    background-color: rgba(15, 17, 21, 0.7);
+}
+
+/* Preloader Content Container - Default Light Mode */
+.preloader-content {
+    text-align: center;
+    padding: 2rem;
+    max-width: 600px;
+    animation: fadeIn 1s ease-in-out;
+    background: rgba(255, 255, 255, 0.4); /* Glass card */
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 24px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(4px);
+}
+
+/* Dark Mode Card */
+html.dark .preloader-content {
+    background: rgba(255, 255, 255, 0.03);
+    border-color: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+/* Logo Styling */
+.preloader-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+    font-size: 3rem;
+    font-weight: 700;
+    font-family: 'Fraunces', serif; 
+    
+    /* Gradient Text works on both modes */
+    background: linear-gradient(135deg, #e67e50, #8b7ba8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Logo Icon */
+.preloader-logo-icon {
+    width: 3.5rem;
+    height: 3.5rem;
+    /* Matching Gradient */
+    background: linear-gradient(135deg, #e67e50, #8b7ba8);
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    box-shadow: 0 8px 16px rgba(230, 126, 80, 0.25);
+}
+
+/* Quote Styling - Default Light Mode */
+.preloader-quote {
+    font-size: 1.25rem;
+    color: #1e293b; /* Dark text for light mode */
+    font-style: italic;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    font-family: 'DM Sans', sans-serif;
+}
+
+/* Dark Mode Quote */
+html.dark .preloader-quote {
+    color: #f1f5f9; /* Light text for dark mode */
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+/* Author Styling - Default Light Mode */
+.preloader-author {
+    font-size: 1rem;
+    color: #64748b; /* Muted dark text */
+    font-weight: 500;
+    margin-top: 0.5rem;
+}
+
+/* Dark Mode Author */
+html.dark .preloader-author {
+    color: #cbd5e1; /* Muted light text */
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Hide class to be added by JS */
+.preloader-hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}

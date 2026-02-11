@@ -6,6 +6,7 @@
     <title>MindLog - Your Personal Growth Journal</title>
     <link href="./assets/css/output.css" rel="stylesheet">
     <link href="./assets/css/dashboard-theme.css" rel="stylesheet">
+    <link href="./assets/css/landing-animation.css" rel="stylesheet">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -72,6 +73,22 @@
     </style>
 </head>
 <body>
+
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="preloader-content">
+            <div class="preloader-logo">
+                <div class="preloader-logo-icon">
+                    <i data-lucide="pen-tool" width="24" height="24"></i>
+                </div>
+                MindLog
+            </div>
+            <div class="preloader-quote">
+                <p id="preloader-quote-text">Loading...</p>
+                <div id="preloader-quote-author" class="preloader-author"></div>
+            </div>
+        </div>
+    </div>
 
     <!-- Navigation -->
     <nav class="navbar">
@@ -374,5 +391,7 @@
             });
         }
     </script>
+    <!-- Landing Animation Script -->
+    <script src="./assets/js/landing-animation.js"></script>
 </body>
 </html>

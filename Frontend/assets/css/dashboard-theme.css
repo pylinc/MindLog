@@ -129,6 +129,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative; /* Context for absolute centering */
 }
 
 .logo {
@@ -139,12 +140,18 @@ body {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    z-index: 10; /* Ensure clickable */
 }
 
 .nav-links {
     display: flex;
     gap: 2rem;
     align-items: center;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: max-content;
+    z-index: 10;
 }
 
 .nav-link {
@@ -182,6 +189,8 @@ body {
     display: flex;
     align-items: center;
     gap: 1rem;
+    z-index: 10; /* Ensure clickable over centered links if overlap */
+    position: relative;
 }
 
 .user-name {
@@ -971,6 +980,20 @@ body {
         padding: 0.4rem 0.75rem;
         font-size: 0.85rem;
     }
+
+    /* Fix Login Link on Mobile */
+    .user-section .nav-link {
+        display: flex;
+        align-items: center;
+        height: 36px; /* Match theme toggle */
+        font-size: 0.9rem;
+        margin-right: 0; /* Remove margin, rely on gap */
+    }
+
+    .user-section {
+        gap: 0.5rem; /* Consistent reduced gap */
+        margin-left: 1rem; /* Push to right */
+    }
     
     /* Page Header */
     .page-header {
@@ -1275,12 +1298,15 @@ body {
     }
     
     /* CTA Buttons */
+    /* CTA Buttons */
     .btn-primary,
     a[href*="signup"],
     a[href*="features"] {
-        width: 100%;
-        padding: 0.875rem 1.5rem !important;
-        font-size: 1rem !important;
+        width: auto !important; /* Fix: Prevent full width in navbar */
+        padding: 0.5rem 1rem !important; /* Reduce padding significantly */
+        font-size: 0.9rem !important;
+        align-self: center; /* Ensure vertical centering */
+        margin: 0 !important;
     }
     
     /* Features Section */
