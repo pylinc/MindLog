@@ -262,90 +262,54 @@
     </section>
 
     <!-- Footer -->
-    <footer class="relative z-10 pt-20 pb-10 border-t border-gray-200 dark:border-gray-800 transition-colors duration-300">
-        <!-- Background Glow (Dark Mode Only) -->
-        <div class="absolute inset-0 overflow-hidden pointer-events-none opacity-0 dark:opacity-100 transition-opacity duration-300">
-             <div class="absolute -top-[50%] -left-[20%] w-[70%] h-[70%] bg-primary/5 rounded-full blur-[120px]"></div>
-             <div class="absolute -bottom-[50%] -right-[20%] w-[70%] h-[70%] bg-blue-600/5 rounded-full blur-[120px]"></div>
-        </div>
-
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8 mb-16">
-                <!-- Brand Content (Col Span 4) -->
-                <div class="lg:col-span-4 space-y-6">
-                    <a href="#" class="flex items-center gap-2 text-2xl font-display font-bold text-adaptive">
-                        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white shadow-lg shadow-primary/20">
-                            <i data-lucide="pen-tool" class="w-5 h-5"></i>
-                        </div>
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <!-- Brand Column -->
+                <div class="footer-brand">
+                    <div class="logo">
                         MindLog
-                    </a>
-                    <p class="text-muted-adaptive text-sm leading-relaxed max-w-sm">
+                    </div>
+                    <p>
                         Your private sanctuary for self-reflection. Track your moods, identify patterns, and grow personally.
                     </p>
-                    <div class="flex space-x-3 pt-2">
-                        <a href="#" class="w-10 h-10 rounded-full bg-slate-200 dark:bg-white/10 border border-transparent dark:border-white/5 flex items-center justify-center text-gray-600 dark:text-gray-400 hover:text-white hover:bg-primary hover:border-primary transition-all duration-300 group">
-                            <i data-lucide="twitter" class="w-5 h-5 group-hover:scale-110 transition-transform"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-slate-200 dark:bg-white/10 border border-transparent dark:border-white/5 flex items-center justify-center text-gray-600 dark:text-gray-400 hover:text-white hover:bg-primary hover:border-primary transition-all duration-300 group">
-                            <i data-lucide="github" class="w-5 h-5 group-hover:scale-110 transition-transform"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-slate-200 dark:bg-white/10 border border-transparent dark:border-white/5 flex items-center justify-center text-gray-600 dark:text-gray-400 hover:text-white hover:bg-primary hover:border-primary transition-all duration-300 group">
-                            <i data-lucide="linkedin" class="w-5 h-5 group-hover:scale-110 transition-transform"></i>
-                        </a>
+                    <div class="footer-social">
+                        <a href="#" class="social-link"><i data-lucide="twitter" class="w-5 h-5"></i></a>
+                        <a href="#" class="social-link"><i data-lucide="github" class="w-5 h-5"></i></a>
+                        <a href="#" class="social-link"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
+                        <a href="#" class="social-link"><i data-lucide="instagram" class="w-5 h-5"></i></a>
                     </div>
                 </div>
 
-                <!-- Product Links (Col Span 2) -->
-                <div class="lg:col-span-2 lg:col-start-6">
-                    <h3 class="font-bold text-adaptive mb-6 text-sm uppercase tracking-wider">Product</h3>
-                    <ul class="space-y-4">
-                        <li><a href="#features" class="text-muted-adaptive text-sm hover:text-primary transition-colors flex items-center gap-2 group"><span class="w-1.5 h-1.5 rounded-full bg-primary/0 group-hover:bg-primary transition-colors"></span>Features</a></li>
-                        <li><a href="#preview" class="text-muted-adaptive text-sm hover:text-primary transition-colors flex items-center gap-2 group"><span class="w-1.5 h-1.5 rounded-full bg-primary/0 group-hover:bg-primary transition-colors"></span>Preview</a></li>
-                        <li><a href="#science" class="text-muted-adaptive text-sm hover:text-primary transition-colors flex items-center gap-2 group"><span class="w-1.5 h-1.5 rounded-full bg-primary/0 group-hover:bg-primary transition-colors"></span>Methodology</a></li>
-                        <li><a href="#" class="text-muted-adaptive text-sm hover:text-primary transition-colors flex items-center gap-2 group"><span class="w-1.5 h-1.5 rounded-full bg-primary/0 group-hover:bg-primary transition-colors"></span>Pricing</a></li>
+                <!-- Links Column 1 -->
+                <div class="footer-links">
+                    <h3 class="footer-heading">Product</h3>
+                    <ul>
+                        <li><a href="#features" class="footer-link">Features</a></li>
+                        <li><a href="#preview" class="footer-link">Preview</a></li>
+                        <li><a href="#science" class="footer-link">Methodology</a></li>
                     </ul>
                 </div>
 
-                <!-- Resources Links (Col Span 2) -->
-                <div class="lg:col-span-2">
-                    <h3 class="font-bold text-adaptive mb-6 text-sm uppercase tracking-wider">Resources</h3>
-                    <ul class="space-y-4">
-                        <li><a href="#" class="text-muted-adaptive text-sm hover:text-primary transition-colors flex items-center gap-2 group"><span class="w-1.5 h-1.5 rounded-full bg-primary/0 group-hover:bg-primary transition-colors"></span>Community</a></li>
-                        <li><a href="#" class="text-muted-adaptive text-sm hover:text-primary transition-colors flex items-center gap-2 group"><span class="w-1.5 h-1.5 rounded-full bg-primary/0 group-hover:bg-primary transition-colors"></span>Help Center</a></li>
-                        <li><a href="#" class="text-muted-adaptive text-sm hover:text-primary transition-colors flex items-center gap-2 group"><span class="w-1.5 h-1.5 rounded-full bg-primary/0 group-hover:bg-primary transition-colors"></span>Blog</a></li>
-                    </ul>
-                </div>
-
-                <!-- Newsletter (Col Span 4) -->
-                <div class="lg:col-span-3">
-                    <h3 class="font-bold text-adaptive mb-6 text-sm uppercase tracking-wider">Stay Updated</h3>
-                    <p class="text-muted-adaptive text-sm mb-4 leading-relaxed">
-                        Join 10,000+ mindful journalists. No spam, just insights.
-                    </p>
-                    <form class="space-y-3" onsubmit="event.preventDefault();">
-                        <div class="relative group">
-                            <input type="email" placeholder="Enter your email" 
-                                class="w-full pl-4 pr-12 py-3.5 rounded-xl bg-slate-100 dark:bg-[#181B21] border border-slate-200 dark:border-gray-800 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all text-sm text-adaptive placeholder:text-gray-400 dark:placeholder:text-gray-600 shadow-inner">
-                            <button type="submit" class="absolute right-2 top-1.5 p-2 rounded-lg bg-primary text-white hover:bg-primary/90 transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5">
-                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                            </button>
-                        </div>
-                        <p class="text-xs text-muted-adaptive">
-                            By subscribing, you agree to our <a href="#" class="underline hover:text-primary">Policy</a>.
-                        </p>
+                <!-- Newsletter Column -->
+                <div class="footer-newsletter">
+                    <h3 class="footer-heading">Stay Updated</h3>
+                    <p>Join 10,000+ mindful journalists. No spam, just insights.</p>
+                    <form class="newsletter-form" onsubmit="event.preventDefault();">
+                        <input type="email" placeholder="Enter your email" class="newsletter-input" required>
+                        <button type="submit" class="newsletter-btn">
+                            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </button>
                     </form>
                 </div>
             </div>
 
-            <!-- Bottom Bar -->
-            <div class="pt-8 border-t border-gray-200 dark:border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4">
-                <p class="text-muted-adaptive text-sm text-center md:text-left">
-                    © 2026 MindLog. Crafted with care.
-                </p>
-                <div class="flex flex-wrap justify-center gap-x-8 gap-y-2 text-sm">
-                    <a href="#" class="text-muted-adaptive hover:text-primary transition-colors mr-6">Privacy Policy</a>
-                    <a href="#" class="text-muted-adaptive hover:text-primary transition-colors mr-6">Terms of Service</a>
-                    <a href="#" class="text-muted-adaptive hover:text-primary transition-colors">Cookie Settings</a>
+            <div class="footer-bottom">
+                <p class="copyright">© 2026 MindLog. Crafted with care.</p>
+                <div class="legal-links">
+                    <a href="#" class="legal-link">Privacy Policy</a>
+                    <a href="#" class="legal-link">Terms of Service</a>
+                    <a href="#" class="legal-link">Cookie Settings</a>
                 </div>
             </div>
         </div>
